@@ -28,8 +28,6 @@ Olyan szellemi, anyagi, gazdasági, társadalmi tényező, amely lehetőséget a
 
 // https://vuetifyjs.com/en/components/text-fields/
 
-import json_editor from "vue2-jsoneditor";
-
 export default {
     name: "HelloWorld",
     data: function() {
@@ -41,11 +39,9 @@ export default {
         msg: String
     },
     components: {
-        json_editor
     },
     mounted() {
-        var JSONEditor = this.$refs.editor.editor;
-        JSONEditor.setMode("view");
+
     }
 };
 </script>
