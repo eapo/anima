@@ -1,0 +1,1126 @@
+<h1 id="oilerplate">ßoilerplate</h1>
+<p>A modular framework for NodeJS based applications.</p>
+<h2 id="whatkindofsorceryisthis">What kind of sorcery is this?</h2>
+<p>On one hand the <code>ß</code> object, with the modular loader mechanism. The code is defined in the boilerplate/loader folder.<br />
+On the other hand the boilerplate for your application - the stack you start with, that will be customized. Defined by modules that are loaded with the boilerplate loader.  </p>
+<h2 id="whatisitgoodforwhyshouldineedthiswhyamireadingthis">What is it good for? Why should I need this? Why am I reading this?</h2>
+<p>On one hand this is a method to reduce complexity, to organize code, to put it to a reuseable form, to create your own modules, to have a structure.
+On the other hand a starting point with some common features already implemented. Several stacks exist already, and it is not too difficoult to start a new stack.</p>
+<p>You may need something like that if you have several projects that have some common code, and you don't want to re-implement everything all the time.</p>
+<h3 id="iusuallysaytheboilervariableoritcanbecalledeszettipaststorsharpsaglobalvariable">ß - I usually say "the boiler-variable", or it can be called Eszett (IPA: [ɛsˈtsɛt]) or "Sharp S" - a global variable.</h3>
+<p>Yes, yes, I know, global variables are bad, and pollute the scope. Yes, so we pollute the scope with this special character, never used anywhere else as far as I know.
+We attach functions and some objects to that variable, and this will run a modular structure to build up our project(s).</p>
+<h3 id="theboilerplateitselfisamodularstructuretostartaprojectwith">The boilerplate itself is a modular structure to start a project with.</h3>
+<p>The first implementation of a full stack, <code>@ng-modules</code> used MongoDB, Express, AngularJS, NodeJS, Passport, and some others. It is now outdated.
+<code>@codepad-modules</code> implements codepad, a collaborative browser based online IDE that we use.
+Frontend <code>@vue-modules</code> along with the <code>@server-modules</code> backend is a modern Vue based fullstack. <code>@vuekit-modules</code> is a minimal non-webpacked version to try things quickly.
+The list goes on, so for the actual list you should check what 'factory' modules we provide. </p>
+<p>Take a look at the modules to get the idea how things can be achived. Once the whole thing is started you actually have something you can extend, override, and build further.
+As a core concept, you can override any part of the code, by design its just a skeleton.</p>
+<p>To explain the philosophy a bit better, a project get's unique as files are added and eventually re-defined.<br />
+There are two kinds of modules, custom modules with priority and factory modules that have parent folders starting with the <code>@</code> character.
+A project may have a module in both of these folders, in that case if a file is present in a custom module, it has priority over the factory module. 
+It can even happen that functionality is split up in two stack folders. Functionality is then built up by the module loader system, honoring your priority modules.</p>
+<p>Let me give you an example. In a project instance we have a <code>modules</code> folder containing the <code>app</code> module, which also has a symlinked file in <code>@vue-modules</code>, called <code>index.html</code>.
+In that case this file defines the index page for the project, and the one from our project overrides the default. Every function, every hook, every frontend file, everything can be customized.</p>
+<p>Note: CWD is a module itself as well.</p>
+<h2 id="gettingstarted">Getting Started</h2>
+<p>Download / mount / Clone the git repo into folder where you want to start your project. We usually use <code>/srv/codepad-project</code>, since we are working with codepad. </p>
+<p>You can make, no, you should make the boilerplate folder readonly, and create at least one <code>modules</code> folder to put your own modules and override existing modules or parts of existing modules.
+It is not recommended to modify the boilerplate content in your project! Any file that is placed properly outside of the boilerplate folder in the project folder, will override the file while loading.</p>
+<p>So, an example of the structure would be:</p>
+<pre><code>/srv/codepad-project  # the project folder (CWD)
+/srv/codepad-project/boilerplate   # the readonly folder (BPD)
+/srv/codepad-project/@somestack-modules   # contains symlinks to the readonly modules used
+/srv/codepad-project/mycustom-modules   # the custom modules for the project (with priority over @-modules)
+/srv/codepad-project/configs   # the project configuration files (initially generated automatically)
+/srv/codepad-project/var/debug   # runtime files, and a debug folder where the boot process can be debugged
+...
+</code></pre>
+<h2 id="runningtheinstaller">Running the installer</h2>
+<p>Well, I use red Hat based systems so if you know what DNF is, you can run the installer.
+You will need NodeJS and npm of course. There are some npm.sh files in the modules, these will install the node_modules of the ß-modules.
+NOTE: <code>modules</code> are ßoilerplat modules, and <code>node_modules</code> are npm packaged modules. Unfortunatley npm has no standard for example for location of publicly visible files in a web project. Some npm modules use a <code>/dist</code> folder, while some others use some different folder, so we need to crate wrapper modules to define express routes, or our stack might use possibly webpack. The point is, <code>node_modules</code> are not to be confused with ß-modules.</p>
+<p>You can start your project with <code>push.sh</code>, an advanced script that uses system scope, <code>ß start</code> or the most simple <code>node server.js</code> - pre-defined constants or variables can be added there.</p>
+<h2 id="whatmodulesareused">What modules are used.</h2>
+<p>In addition to the modules folder, all folders in the working directory that have 'modules' in their name will be considered as a set of modules. (Except <code>node_modules</code>)
+They are processed sequentially, however if a modules folder is prefixed with <code>@</code> it will be considered a boilerplate factory module, and has lower priority as the other modules. 
+A module-condition.js file if present, has to evalute to true. A list of modules is printed into <code>/var/boilerplate/debug</code> </p>
+<h2 id="otherspecialcharacters">Other special characters</h2>
+<p>if you see this:</p>
+<pre><code>ł(some_vairable, or_two_variables); // mostly same as console.log
+Ł(that, or_what, something); // extended logs with info on where it happened
+</code></pre>
+<p>Don't panik. These two are just logging functions, mainly used in development.</p>
+<pre><code>đ(err); // not so fatal, log and continiue
+Đ(error); // fatal error, log and throw
+</code></pre>
+<p>Don't panik either. These two are the determinator and the detonator functions, that handle errors.</p>
+<h2 id="license">License</h2>
+<p>This project is licensed under the MIT License - see the <a href="LICENSE.md">LICENSE.md</a> file for details.</p>
+<p><a href="https://anima.d250.hu:9001/p/boilerplate/README.EN.md?line=1"><code>README.EN.md:1</code></a></p>
+<p>The <code>/global</code> folder in a module should contain simple scripts to attach values to the global <code>ß</code> namespace.</p>
+<p><a href="https://anima.d250.hu:9001/p/boilerplate/loader/boot.js?line=9"><code>boot.js:9</code></a></p>
+<p>The <code>/local</code> may contain pre-defined code which is loaded before libs are loaded. Factory should not have any local folder, it is project-specific code.</p>
+<p><a href="https://anima.d250.hu:9001/p/boilerplate/loader/boot.js?line=11"><code>boot.js:11</code></a></p>
+<p>After the global <code>ß</code> values are set, libs and hooks are loaded.</p>
+<p><a href="https://anima.d250.hu:9001/p/boilerplate/loader/boot.js?line=13"><code>boot.js:13</code></a></p>
+<h2 id="theobject">THE ß object</h2>
+<p>The boilerplate module framework uses a "ß namespace" to store constants and references to functions across it's modules.<br />
+This namespace is attached to the <code>ß</code> primary global variable, visible in the global scope. Frequently used node modules can be attached directly.<br />
+You can pre-create the ß variable in your server.js file before loading the boilerplate, to pre-define functions variables and constants.  </p>
+<p>A custom <code>server.js</code> with debug-mode may look like this.    </p>
+<pre><code>// Pre-declare ß so constants and functions can be attached.  
+global.ß = {};  
+// Set the DEBUG constant to true  
+ß.DEBUG = true;  
+</code></pre>
+<p><br />
+The entry point to boot the framework is then: <code>require("./boilerplate");</code></p>
+<p><a href="https://anima.d250.hu:9001/p/boilerplate/loader/bp.js?line=5"><code>bp.js:5</code></a></p>
+<p>We can debug the namespace by writing a  debug file. <code>ß.debug_namespace</code> will by default write the file to  <code>ß.VAR /debug/boiler-namespace.txt</code></p>
+<p><a href="https://anima.d250.hu:9001/p/boilerplate/loader/bp.js?line=43"><code>bp.js:43</code></a></p>
+<p>To use the <code>ß</code> namespace in files outside of the framework, we export it in es5 and es6 formats. Arrays dont work, but objects do.</p>
+<p><a href="https://anima.d250.hu:9001/p/boilerplate/loader/bp.js?line=62"><code>bp.js:62</code></a></p>
+<p>By convention, uppercase variables are considered exportable-constants</p>
+<p><a href="https://anima.d250.hu:9001/p/boilerplate/loader/bp.js?line=78"><code>bp.js:78</code></a></p>
+<p>The <code>uncaughtException</code> handler, determinator <code>đ</code> and detonator <code>Đ</code> functions, as well as the calling sourcefile field of the logging function <code>Ł</code> has file paths converted to ansi links by default in non-production mode.<br />
+   Conversation takes place and can be customized by pre-defining boilerplate constants and functions.</p>
+<p><a href="https://anima.d250.hu:9001/p/boilerplate/loader/det.js?line=21"><code>det.js:21</code></a></p>
+<h2 id="loggingthrowing">Logging, Throwing</h2>
+<h3 id="catchedexceptions">Catched exceptions</h3>
+<p><code>uncaughtException</code> is captured and displayed with enhanced formatting.</p>
+<p><a href="https://anima.d250.hu:9001/p/boilerplate/loader/det.js?line=94"><code>det.js:94</code></a></p>
+<p>leadnull is a superglobal function. Usage: <code>ł(obj, 'foo.bar')</code></p>
+<p><a href="https://anima.d250.hu:9001/p/boilerplate/loader/det.js?line=108"><code>det.js:108</code></a></p>
+<pre><code>// Demonstration of the leadnull ł function  
+
+var a = {};  
+a.b = {};  
+a.b.c = {};  
+a.b.c.d = {};  
+
+a.b.c.d.value = "Hello ł";  
+
+let test1 = ł(a, "b.c.d.value");  
+let test2 = ł(a, "b.x.d.value");  
+
+let a3 = "String";  
+let bx = false;  
+let test3 = ł(a3, "b.x.d.value");  
+let test4 = ł(a, bx);  
+
+Ł(a.b.c.d.value, test1, test2, test3, test4);  
+
+/* returns  
+
+┠─ Hello ł   // correct access of nested objects  
+┠─ Hello ł   // access the correct object via ł  
+┠─ undefined // access an undefined object at ł  
+┠─ null      // wrong first argument  
+┠─ null      // wrong second argument  
+
+Wrong use of ł, first argument is not an object in at Object.&lt;anonymous&gt; (/srv/codepad-project/demo.js:33:13)  
+Wrong use of ł, second argument is not a string in at Object.&lt;anonymous&gt; (/srv/codepad-project/demo.js:34:13)  
+</code></pre>
+<p><a href="https://anima.d250.hu:9001/p/boilerplate/loader/det.js?line=110"><code>det.js:110</code></a></p>
+<h3 id="supergloballoggingfunctiontobeusedduringdevelopment">Superglobal Logging <code>Ł</code> function to be used during development</h3>
+<p>Place temporary <code>console.log()</code>-like function with short special character, they can be tracked down easyly within the project.<br />
+<code>Ł()</code> is an enhanced <code>console.log</code> that prints it's arguments in seperate lines, and indicates when and where it has been called from.<br />
+It is very useful while development, to analize objects and variables in the code. Production-ready code should not contain this logging helper.</p>
+<p><a href="https://anima.d250.hu:9001/p/boilerplate/loader/det.js?line=182"><code>det.js:182</code></a></p>
+<h3 id="globaldeterminatorandthedetonatorerrorhandlers">Global  determinator <code>đ</code> and the detonator <code>Đ</code> error-handlers.</h3>
+<p>Should the determinator function <code>đ(err);</code> recieve an error as argument, it will log the error, then execution will continiue.<br />
+On the other hand the detonator <code>Đ(err);</code> will log the error and exit the current process.<br />
+Both functions can be part of production-ready code, but encountering them indicates an error.</p>
+<p><a href="https://anima.d250.hu:9001/p/boilerplate/loader/det.js?line=201"><code>det.js:201</code></a></p>
+<p>In async functions we can <code>await</code> for <code>ß</code> variables to be defined.<br />
+   <code>await ß.isDefined('boilerplate_variable');</code></p>
+<p><a href="https://anima.d250.hu:9001/p/boilerplate/loader/es2017.js?line=1"><code>es2017.js:1</code></a></p>
+<p><code>ß.spawn_command</code> will execute a single bash command via <code>child_process.spawn</code></p>
+<p><a href="https://anima.d250.hu:9001/p/boilerplate/loader/exec.js?line=5"><code>exec.js:5</code></a></p>
+<h2 id="moduledirforking">Module dir forking</h2>
+<p>A js file can be executed, or better said forked:<br />
+<code>ß.fork_file(file, name, argv, option)</code> this will call <code>child_process.fork()</code>.</p>
+<p><a href="https://anima.d250.hu:9001/p/boilerplate/loader/fork.js?line=5"><code>fork.js:5</code></a></p>
+<p>The fork folder in a module is a folder containing js files to be forked at startup.<br />
+It will fork all the files in this folder, first in all the custom modules, then in the '@-modules' while honoring custom modules with priority in case of name collision.<br />
+Each forked process will have it's PID, stderr and stdout in files at <code>ß.VAR /debug</code><br />
+<code>
+/fork  
+</code><br />
+A module may define additional folders containing files to be forked.</p>
+<p><a href="https://anima.d250.hu:9001/p/boilerplate/loader/fork.js?line=104"><code>fork.js:104</code></a></p>
+<p><code>ß.fs</code> is reference to the <a href="https://github.com/jprichardson/node-fs-extra">fs-extra</a> package<br />
+Instead of <code>fs = require('fs');</code> you can use <code>ß.fs</code> directly, use <code>mkdirp</code>, and <code>readJson</code> and other handy functions.</p>
+<p><a href="https://anima.d250.hu:9001/p/boilerplate/loader/fs.js?line=1"><code>fs.js:1</code></a></p>
+<p><code>ß.path</code> is the native path</p>
+<p><a href="https://anima.d250.hu:9001/p/boilerplate/loader/fs.js?line=5"><code>fs.js:5</code></a></p>
+<p><code>fs.isDirSync</code> and <code>fs.isFileSync</code> are some extra function to check if they exists for real. The only argument is the path. Works with symlinked paths.</p>
+<p><a href="https://anima.d250.hu:9001/p/boilerplate/loader/fs.js?line=12"><code>fs.js:12</code></a></p>
+<p><code>fs.inPathsSync</code> will give all entries, <code>fs.inFilesSync</code> all files and <code>fs.inDirsSync</code> all folder.<br />
+First argument is the path, second is the function to be called on each result items. The processor function works with a single argument, the result itself.</p>
+<p><a href="https://anima.d250.hu:9001/p/boilerplate/loader/fs.js?line=29"><code>fs.js:29</code></a></p>
+<p><code>ß.fs.traverse_path_process_files</code> is a recursive sync function that will process all files starting with the given path.</p>
+<p><a href="https://anima.d250.hu:9001/p/boilerplate/loader/fs.js?line=82"><code>fs.js:82</code></a></p>
+<h2 id="modulehooks">Module hooks</h2>
+<p>Hooks are similar to lib-functions, however, multiple hooks from multiple modules are called when calling <code>ß.run_hook</code>.<br />
+Hooks are defined with <code>module.exports = function(arguments)</code> within js files with the naming schema <code>module/hooks/hookname.function-name.js</code><br />
+The hookname is the reference for the call, the function-name should be a descriptive custom name, programatically not used.<br />
+As always, hooks definied within the project-modules take precedence over @boilerplate-modules. Hooks may have multiple arguments.<br />
+A development-debug log is generated in the <code>ß.VAR</code> directory.</p>
+<p><a href="https://anima.d250.hu:9001/p/boilerplate/loader/hook.js?line=7"><code>hook.js:7</code></a></p>
+<h2 id="constants">Constants</h2>
+<p><code>ß.DEBUG</code> is a boolean constant<br />
+<code>ß.HOSTNAME</code> should be the FQDN hostname<br />
+<code>ß.MRD</code> is the module root directory</p>
+<p><a href="https://anima.d250.hu:9001/p/boilerplate/loader/init.js?line=1"><code>init.js:1</code></a></p>
+<p><code>ß.CWD</code> stands for the Current Work Directory and refers to the project root.</p>
+<p><a href="https://anima.d250.hu:9001/p/boilerplate/loader/init.js?line=20"><code>init.js:20</code></a></p>
+<p><code>ß.NAME</code> is a project name, by default the parent folder name of <code>CWD</code></p>
+<p><a href="https://anima.d250.hu:9001/p/boilerplate/loader/init.js?line=23"><code>init.js:23</code></a></p>
+<p><code>ß.BPD</code> is the Boilerplate Directory</p>
+<p><a href="https://anima.d250.hu:9001/p/boilerplate/loader/init.js?line=33"><code>init.js:33</code></a></p>
+<p><code>CWD</code> should contain a <code>/version</code> file containing the build number as string. This should be incremented in every build.</p>
+<p><a href="https://anima.d250.hu:9001/p/boilerplate/loader/init.js?line=36"><code>init.js:36</code></a></p>
+<h2 id="lablibbuiltinlogging">Lablib - builtin logging</h2>
+<p>There are six builtin logging functions in the ß namespace, that have ansi colors when colorised-logging is enabled in development.<br />
+These logs are written to the console, and a file.   </p>
+<p>Application-logic logs that may be used by admins.  </p>
+<p><code>ß.log()</code> a gray logmessage<br />
+<code>ß.msg()</code> logs a green message<br />
+<code>ß.ntc()</code> a yellow notice<br />
+<code>ß.err()</code> red error message    </p>
+<p>Development-logic logs, to be used in programming.  </p>
+<p><code>ß.error()</code> red error that does not appear in application logs<br />
+<code>ß.debug()</code> only if debug mode is enabled, logs with a blue line<br />
+<code>ß.logfs()</code> logs to the filesystem only, to the var/debug folder  </p>
+<p>The variable <code>ß.LOGPATH</code> can be set to any folder accessible by the application. Each of the ß logging functions will append an enty here.<br />
+Coloring is disabled in production, so that syslog and other logging tools can process logs without noise.</p>
+<p><a href="https://anima.d250.hu:9001/p/boilerplate/loader/lablib.js?line=14"><code>lablib.js:14</code></a></p>
+<h2 id="modulelibs">Module libs</h2>
+<p>Each module may have a <code>/lib</code> folder with js files, each file containing a single function automatically exposed on the <code>ß.lib</code> namespace.<br />
+Such a function should be defined with <code>module.exports = function(arguments) {}</code><br />
+These are then named by their filename and can be referred with <code>ß.lib.modulename.functionname</code> (namespaced with module names) or <code>ß.lib.functionname</code> (direct lib namespace)<br />
+lib-function files in <code>@-modules</code> have lower precedence over custom modules, thus if defined with priority, they will be overridden.<br />
+The function-defining js files may contain private local variables and functions, and any number of arguments.</p>
+<p><a href="https://anima.d250.hu:9001/p/boilerplate/loader/lib.js?line=7"><code>lib.js:7</code></a></p>
+<h2 id="moduledirloading">Module dir loading</h2>
+<p>There is a command to <code>require()</code> all files in a dir of all modules.<br />
+This is done by passing a 'dir' name as an argument to <code>ß.load();</code>.<br />
+It will load all the files in this, first in all the custom modules, then in the '@-modules' while honoring custom modules with priority.<br />
+Some folders that are loaded by the framework:<br />
+<code>
+/init  
+/server  
+/routes (via server/server.js)  
+/start  
+/debug (only if debug mode is on)  
+</code></p>
+<p><a href="https://anima.d250.hu:9001/p/boilerplate/loader/load.js?line=5"><code>load.js:5</code></a></p>
+<p>by default the logger object is the console, but we can use other loggers too, eg files.</p>
+<p><a href="https://anima.d250.hu:9001/p/boilerplate/loader/logger.js?line=2"><code>logger.js:2</code></a></p>
+<h2 id="oilerplateglobalmodulesjs">ßoilerplate/global/modules.js</h2>
+<p><code>ß.modules</code> contains all the modules that we use<br />
+Via <code>USE_MODULENAME = false</code>, we can de-activate modules, and/or query if the module is used.<br />
+   However, it is rather recommended to create module sets, that means folders containing modules (or symlinks to modules).</p>
+<p><a href="https://anima.d250.hu:9001/p/boilerplate/loader/modules.js?line=4"><code>modules.js:4</code></a></p>
+<p><code>CWD</code> itself is a primary module with priority.</p>
+<p><a href="https://anima.d250.hu:9001/p/boilerplate/loader/modules.js?line=14"><code>modules.js:14</code></a></p>
+<p><code>ß.load_modules(modules_root)</code> will load all modules located in that directory. loaded modules will be added to 'ß.modules' and processed at all further steps of the boilerplate-loader</p>
+<p><a href="https://anima.d250.hu:9001/p/boilerplate/loader/modules.js?line=64"><code>modules.js:64</code></a></p>
+<p>Module folders either have priority or not. If there is no @ character prefixing the directory, it has priority, therefore 'factory' libs should be prefixed with @ and can be symlinks.<br />
+           Module folders are are <code>modules</code> or folders that end with <code>*-modules</code>.</p>
+<p><a href="https://anima.d250.hu:9001/p/boilerplate/loader/modules.js?line=73"><code>modules.js:73</code></a></p>
+<p>the <code>ß.debug_modules()</code> function will write two files, so that the loaded modules can be debugged.</p>
+<p><a href="https://anima.d250.hu:9001/p/boilerplate/loader/modules.js?line=101"><code>modules.js:101</code></a></p>
+<p>resolve the path for a npm node_module with <code>ß.resolve_node_module_path(node_module [,paths])</code><br />
+While processing all arguments will be joined together and appended to the <code>node_module</code> we are looking for.</p>
+<p><a href="https://anima.d250.hu:9001/p/boilerplate/loader/modules.js?line=178"><code>modules.js:178</code></a></p>
+<p>you may specify your superglobal node modules, like underscore, or async.js in the <code>node_modules.js</code> file in your project-root (<code>CWD</code>).</p>
+<p><a href="https://anima.d250.hu:9001/p/boilerplate/loader/node_modules.js?line=6"><code>node_modules.js:6</code></a></p>
+<h2 id="oilerplatetimestampfunctions">ßoilerplate timestamp functions</h2>
+<p>Simple date functions<br />
+<code>ß.now()</code> returns yyyy-mm-dd hh:mm:ss format<br />
+<code>ß.date()</code> returns yyyy-mm-dd format<br />
+<code>ß.time()</code> returns dd hh:mm:ss format<br />
+<code>ß.DATE</code> and <code>ß.TIME</code> are constant stamps created at bootup</p>
+<p><a href="https://anima.d250.hu:9001/p/boilerplate/loader/now.js?line=3"><code>now.js:3</code></a></p>
+<p>as an application we write our pid to a file</p>
+<p><a href="https://anima.d250.hu:9001/p/boilerplate/loader/pid.js?line=11"><code>pid.js:11</code></a></p>
+<p>The signal <code>SIGUSR1</code> will restart the server process.</p>
+<p><a href="https://anima.d250.hu:9001/p/boilerplate/loader/process.js?line=15"><code>process.js:15</code></a></p>
+<h2 id="moduledirloading-1">Module dir loading</h2>
+<p>The framework has internal methods for sh, js file and command execution.  </p>
+<p>To execute bash files in modules pass a 'filename' as an argument to <code>ß.exec();</code>.<br />
+It will run files matching this filename, first in all the custom modules, then in the '@-modules' while honoring custom modules with priority.<br />
+Note that the implementation contains both sync and async elements, and does not return any values, but logs into the <code>var</code> folder.<br />
+These methods are used in the installation process for example. The following files get executed in each of the modules, if they exists:  </p>
+<pre><code>install.sh  
+dnf.sh  
+npm.sh  
+</code></pre>
+<p><a href="https://anima.d250.hu:9001/p/boilerplate/loader/spawn.js?line=3"><code>spawn.js:3</code></a></p>
+<p><code>ß.spawn_command</code> will execute a single bash command via <code>child_process.spawn</code></p>
+<p><a href="https://anima.d250.hu:9001/p/boilerplate/loader/spawn.js?line=23"><code>spawn.js:23</code></a></p>
+<p><code>ß.bash_file</code> will execute a single bash file via <code>child_process.spawn</code></p>
+<p><a href="https://anima.d250.hu:9001/p/boilerplate/loader/spawn.js?line=59"><code>spawn.js:59</code></a></p>
+<h2 id="symlinks">symlinks</h2>
+<p><code>ß.link</code> is a function to symlink a source path to a destination path. it will check if this is a legal command, and return if not.<br />
+Underlying directories will be created.</p>
+<p><a href="https://anima.d250.hu:9001/p/boilerplate/loader/symlink.js?line=5"><code>symlink.js:5</code></a></p>
+<p>The <code>ß.uplink</code> function will symlink everything that a folder has to a new real folder</p>
+<p><a href="https://anima.d250.hu:9001/p/boilerplate/loader/symlink.js?line=25"><code>symlink.js:25</code></a></p>
+<h1 id="modulesdocumentation">Module's Documentation</h1>
+<h2 id="thecodepadprojectmodule">The codepad-project module</h2>
+<h4 id=""> </h4>
+<p>Entry point of the admin area</p>
+<p><a href="https://anima.d250.hu:9001/p/var/vue/en/src/admin.js?line=2"><code>admin.js:2</code></a></p>
+<p>Socketio will only connect if a passport user is logged in. Override possible.</p>
+<p><a href="https://anima.d250.hu:9001/p/var/vue/en/src/admin.js?line=16"><code>admin.js:16</code></a></p>
+<p>UPDATE this.<em>vm.$socket.emit has to be replaced with this.</em>vm.$socket.client.emit</p>
+<p><a href="https://anima.d250.hu:9001/p/var/vue/en/src/disabled_store.js?line=10"><code>disabled_store.js:10</code></a></p>
+<p>Entry point of the frontend is main.js</p>
+<p><a href="https://anima.d250.hu:9001/p/var/vue/en/src/main.js?line=2"><code>main.js:2</code></a></p>
+<p>Socketio will only connect if a passport user is logged in. Override possible.</p>
+<p><a href="https://anima.d250.hu:9001/p/var/vue/en/src/main.js?line=15"><code>main.js:15</code></a></p>
+<p>Use a /static file in a template<br />
+<img :src="$app.uri('/some.svg')" height="200px">  </p>
+<p>Use an asset file in a template<br />
+<img :src="require('@/assets/some.svg')" height="200px"></p>
+<p><a href="https://anima.d250.hu:9001/p/var/vue/en/src/main.js?line=59"><code>main.js:59</code></a></p>
+<p>Entry point of the admin area</p>
+<p><a href="https://anima.d250.hu:9001/p/var/vue/hu/src/admin.js?line=2"><code>admin.js:2</code></a></p>
+<p>Socketio will only connect if a passport user is logged in. Override possible.</p>
+<p><a href="https://anima.d250.hu:9001/p/var/vue/hu/src/admin.js?line=16"><code>admin.js:16</code></a></p>
+<p>UPDATE this.<em>vm.$socket.emit has to be replaced with this.</em>vm.$socket.client.emit</p>
+<p><a href="https://anima.d250.hu:9001/p/var/vue/hu/src/disabled_store.js?line=10"><code>disabled_store.js:10</code></a></p>
+<p>Entry point of the frontend is main.js</p>
+<p><a href="https://anima.d250.hu:9001/p/var/vue/hu/src/main.js?line=2"><code>main.js:2</code></a></p>
+<p>Socketio will only connect if a passport user is logged in. Override possible.</p>
+<p><a href="https://anima.d250.hu:9001/p/var/vue/hu/src/main.js?line=15"><code>main.js:15</code></a></p>
+<p>Use a /static file in a template<br />
+<img :src="$app.uri('/some.svg')" height="200px">  </p>
+<p>Use an asset file in a template<br />
+<img :src="require('@/assets/some.svg')" height="200px"></p>
+<p><a href="https://anima.d250.hu:9001/p/var/vue/hu/src/main.js?line=59"><code>main.js:59</code></a></p>
+<p>Entry point of the admin area</p>
+<p><a href="https://anima.d250.hu:9001/p/var/vue/src/admin.js?line=2"><code>admin.js:2</code></a></p>
+<p>Socketio will only connect if a passport user is logged in. Override possible.</p>
+<p><a href="https://anima.d250.hu:9001/p/var/vue/src/admin.js?line=16"><code>admin.js:16</code></a></p>
+<p>UPDATE this.<em>vm.$socket.emit has to be replaced with this.</em>vm.$socket.client.emit</p>
+<p><a href="https://anima.d250.hu:9001/p/var/vue/src/disabled_store.js?line=10"><code>disabled_store.js:10</code></a></p>
+<p>Entry point of the frontend is main.js</p>
+<p><a href="https://anima.d250.hu:9001/p/var/vue/src/main.js?line=2"><code>main.js:2</code></a></p>
+<p>Socketio will only connect if a passport user is logged in. Override possible.</p>
+<p><a href="https://anima.d250.hu:9001/p/var/vue/src/main.js?line=15"><code>main.js:15</code></a></p>
+<p>Use a /static file in a template<br />
+<img :src="$app.uri('/some.svg')" height="200px">  </p>
+<p>Use an asset file in a template<br />
+<img :src="require('@/assets/some.svg')" height="200px"></p>
+<p><a href="https://anima.d250.hu:9001/p/var/vue/src/main.js?line=59"><code>main.js:59</code></a></p>
+<pre>
+@admin-modules
+ - admin
+ - ansi
+ - logs
+@javascript-modules
+ - async
+ - clouddata
+ - clouddir
+ - csvloader
+ - devel_iframe
+ - googleapis
+ - jest
+ - mikrotik
+ - mime
+ - moment
+ - ping
+ - rclone
+@server-modules
+ - admin
+ - api
+ - cors
+ - favicon
+ - logging
+ - mongodb
+ - mongoose
+ - multilanguage
+ - nodemailer
+ - passport
+ - passport_admin
+ - passport_facebook
+ - passport_google
+ - passport_hash
+ - readme
+ - server
+ - session
+ - socketio
+ - user_profile
+ - verify
+@vue-modules
+ - app
+ - bootstrap-vue
+ - fontawesome5
+ - jsoneditor
+ - login
+ - multilanguage
+ - socketio
+ - vue
+ - vueinclude
+ - vuetify
+ - vuex
+boilerplate
+ - .gitignore
+ - LICENSE.md
+ - NOTES.md
+ - README.EN.md
+ - README.HU.md
+ - cli.js
+ - cli.sh
+ - index.js
+ - install
+ - install-defaults.sh
+ - install.sh
+ - loader
+ - publishlib.sh
+ - pushlib.sh
+ - start.sh
+config
+ - admin-passports.json
+ - admin-passwords.json
+ - connect-mongodb-session.json
+ - mongodb.json
+ - passport_facebook.json
+ - passport_google.json
+var
+ - app
+ - await
+ - boilerplate.es5.js
+ - boilerplate.es6.js
+ - boilerplate.sh
+ - codepad-project.modules.json
+ - debug
+ - log
+ - project.log
+ - project.pid
+ - vue
+</pre>
+<h2 id="theadminmodule">The @admin module</h2>
+<h4 id="adminmodulesadmin">/@admin-modules/admin</h4>
+<p>The admin page will be available on the <code>/admin</code> uri.</p>
+<p><a href="https://anima.d250.hu:9001/p/@admin-modules/admin/global/pages.js?line=1"><code>pages.js:1</code></a></p>
+<p>Entry point of the admin area</p>
+<p><a href="https://anima.d250.hu:9001/p/@admin-modules/admin/vue/admin.js?line=2"><code>admin.js:2</code></a></p>
+<p>Socketio will only connect if a passport user is logged in. Override possible.</p>
+<p><a href="https://anima.d250.hu:9001/p/@admin-modules/admin/vue/admin.js?line=16"><code>admin.js:16</code></a></p>
+<pre>
+global
+ - pages.js
+hooks
+ - adminsocket.messages.js
+vue
+ - Admin.vue
+ - admin.html
+ - admin.js
+ - components
+</pre>
+<h2 id="theadminmodule-1">The @admin module</h2>
+<h4 id="servermodulesadmin">/@server-modules/admin</h4>
+<pre>
+express
+ - admin.js
+global
+ - rewrites.js
+index
+ - admin-index.js
+post-routes
+ - admin.js
+</pre>
+<h2 id="theansimodule">The @ansi module</h2>
+<h4 id="adminmodulesansi">/@admin-modules/ansi</h4>
+<pre>
+lib
+ - html.js
+</pre>
+<h2 id="thelogsmodule">The @logs module</h2>
+<h4 id="adminmoduleslogs">/@admin-modules/logs</h4>
+<pre>
+global
+ - logfile.js
+hooks
+ - socket.sendlog.js
+lib
+ - get_log_page.js
+ - send_log.js
+ - send_logline.js
+ - send_logs.js
+public
+ - app.logsController.js
+ - logs.ejs
+routes
+ - logs.js
+start
+ - logwatch.js
+</pre>
+<h2 id="theasyncmodule">The @async module</h2>
+<h4 id="javascriptmodulesasync">/@javascript-modules/async</h4>
+<p>check https://caolan.github.io/async/v3/</p>
+<p><a href="https://anima.d250.hu:9001/p/@javascript-modules/async/global/async.js?line=1"><code>async.js:1</code></a></p>
+<pre>
+global
+ - async.js
+</pre>
+<h2 id="theclouddatamodule">The @clouddata module</h2>
+<h4 id="javascriptmodulesclouddata">/@javascript-modules/clouddata</h4>
+<p>ß.CLOUDDIR is a an external source that can be used in the project, eg google drive or anything rclone can import. The clouddata module imports json files.</p>
+<p><a href="https://anima.d250.hu:9001/p/@javascript-modules/clouddata/init/clouddata.js?line=1"><code>clouddata.js:1</code></a></p>
+<p>The clouddir is scanned and files attached to ß.CLOUDDIR in objects based on their path</p>
+<p><a href="https://anima.d250.hu:9001/p/@javascript-modules/clouddata/lib/build.js?line=1"><code>build.js:1</code></a></p>
+<pre>
+init
+ - clouddata.js
+lib
+ - build.js
+</pre>
+<h2 id="theclouddirmodule">The @clouddir module</h2>
+<h4 id="javascriptmodulesclouddir">/@javascript-modules/clouddir</h4>
+<p>ß.CLOUDDIR is a an external source that can be used in the project, eg google drive or anything rclone can import. Clouddir lists and serves files.</p>
+<p><a href="https://anima.d250.hu:9001/p/@javascript-modules/clouddir/init/clouddir.js?line=1"><code>clouddir.js:1</code></a></p>
+<p>The clouddir is scanned and files attached to ß.CLOUDDIR in objects based on their path</p>
+<p><a href="https://anima.d250.hu:9001/p/@javascript-modules/clouddir/lib/build.js?line=1"><code>build.js:1</code></a></p>
+<pre>
+express
+ - serve-clouddir.js
+init
+ - clouddir.js
+lib
+ - build.js
+routes
+ - clouddir.js
+</pre>
+<h2 id="thecsvloadermodule">The @csvloader module</h2>
+<h4 id="javascriptmodulescsvloader">/@javascript-modules/csvloader</h4>
+<pre>
+init
+ - csvtojson.js
+lib
+ - csvtojson.js
+ - csvtostring.js
+ - csvtostringSync.js
+</pre>
+<h2 id="thedevel_iframemodule">The @devel_iframe module</h2>
+<h4 id="javascriptmodulesdevel_iframe">/@javascript-modules/devel_iframe</h4>
+<pre>
+routes
+ - devel.js
+start
+ - devel.js
+</pre>
+<h2 id="thejestmodule">The @jest module</h2>
+<h4 id="javascriptmodulesjest">/@javascript-modules/jest</h4>
+<pre>
+</pre>
+<h2 id="themikrotikmodule">The @mikrotik module</h2>
+<h4 id="javascriptmodulesmikrotik">/@javascript-modules/mikrotik</h4>
+<pre>
+routeros_scripts
+ - enable-https.ros.sh
+</pre>
+<h2 id="themimemodule">The @mime module</h2>
+<h4 id="javascriptmodulesmime">/@javascript-modules/mime</h4>
+<pre>
+lib
+ - detect.js
+</pre>
+<h2 id="themomentmodule">The @moment module</h2>
+<h4 id="javascriptmodulesmoment">/@javascript-modules/moment</h4>
+<pre>
+global
+ - moment.js
+</pre>
+<h2 id="thepingmodule">The @ping module</h2>
+<h4 id="javascriptmodulesping">/@javascript-modules/ping</h4>
+<pre>
+init
+ - ping.js
+start
+ - ping.js
+</pre>
+<h2 id="therclonemodule">The @rclone module</h2>
+<h4 id="javascriptmodulesrclone">/@javascript-modules/rclone</h4>
+<pre>
+</pre>
+<h2 id="theapimodule">The @api module</h2>
+<h4 id="servermodulesapi">/@server-modules/api</h4>
+<pre>
+express
+ - api.js
+global
+ - rewrites.js
+post-routes
+ - api.js
+</pre>
+<h2 id="thecorsmodule">The @cors module</h2>
+<h4 id="servermodulescors">/@server-modules/cors</h4>
+<p>The cors module will allow express to use our API endpoints from several origings, eg. build and development.<br />
+The default configs use https and the development webpack hot module replacement uses our default port 9000.</p>
+<p><a href="https://anima.d250.hu:9001/p/@server-modules/cors/express/cors.js?line=1"><code>cors.js:1</code></a></p>
+<pre>
+express
+ - cors.js
+</pre>
+<h2 id="thefaviconmodule">The @favicon module</h2>
+<h4 id="servermodulesfavicon">/@server-modules/favicon</h4>
+<p>If the project CWD contains a favicon.ico, it will be served as favicon, otherwise a default icon from the module is used.</p>
+<p><a href="https://anima.d250.hu:9001/p/@server-modules/favicon/start/favicon.js?line=3"><code>favicon.js:3</code></a></p>
+<pre>
+start
+ - favicon.js
+static
+ - favicon.ico
+</pre>
+<h2 id="theloggingmodule">The @logging module</h2>
+<h4 id="servermoduleslogging">/@server-modules/logging</h4>
+<p>Logging via morgan logger. By default we trust the proxy, and log to <code>VAR</code> log folder to a file marked with the startup date and time.</p>
+<p><a href="https://anima.d250.hu:9001/p/@server-modules/logging/express/morgan.js?line=3"><code>morgan.js:3</code></a></p>
+<pre>
+express
+ - morgan.js
+</pre>
+<h2 id="themongodbmodule">The @mongodb module</h2>
+<h4 id="servermodulesmongodb">/@server-modules/mongodb</h4>
+<pre>
+</pre>
+<h2 id="themongoosemodule">The @mongoose module</h2>
+<h4 id="servermodulesmongoose">/@server-modules/mongoose</h4>
+<p>If there is no config file for mongodb, the first startup will create one automatically.<br />
+Seperate debug config - if exists - will be used in debug mode.<br />
+The default host is 127.0.0.1</p>
+<p><a href="https://anima.d250.hu:9001/p/@server-modules/mongoose/lib/config_mongodb.js?line=3"><code>config_mongodb.js:3</code></a></p>
+<p>Mongodb is integrated with the mongoose module. In the init folder:<br />
+   <code>ß.lib.mongoose.define('name'); // name is a collection name we define</code><br />
+   To keep the conventions we use the default common naming casings.<br />
+   <code>ß[nameModel]</code> The model<br />
+   <code>name_model + '/keys'</code> Scripts folder in modules to add keys to the model:<br />
+   <code>ß[nameSchema]</code> The Schema<br />
+   <code>name_model + '/methods'</code> Scripts folder in modules to add methods the the model<br />
+   <code>ß[Name]</code> The mongoose model using name and nameSchema.<br />
+   <code>ß.mongoose_collections</code> The array of collections we use<br />
+   <code>ß.USE_DB_NAME</code> Constant for reference of used databases.</p>
+<p><a href="https://anima.d250.hu:9001/p/@server-modules/mongoose/lib/define.js?line=2"><code>define.js:2</code></a></p>
+<p>At startup, a backup script is generated.</p>
+<p><a href="https://anima.d250.hu:9001/p/@server-modules/mongoose/start/db.js?line=3"><code>db.js:3</code></a></p>
+<pre>
+global
+ - mongoose.js
+init
+ - mongoose.js
+lib
+ - config_mongodb.js
+ - define.js
+mongo-scripts
+ - dropall.js
+ - showall.js
+start
+ - db.js
+</pre>
+<h2 id="themultilanguagemodule">The @multilanguage module</h2>
+<h4 id="servermodulesmultilanguage">/@server-modules/multilanguage</h4>
+<p>The language module can be used to create multilingual page versions, with inline translations.<br />
+This has been implemented for simple bilingual apps, where english and other languages shall be supported.<br />
+The locale specific versions are then rendered for each language in the build process.  </p>
+<p>The <code>ß.DEFAULT_LANG</code> variable defines what language should be used, in a fallback to a default.</p>
+<p><a href="https://anima.d250.hu:9001/p/@server-modules/multilanguage/global/default.js?line=1"><code>default.js:1</code></a></p>
+<p>We guess the language the user prefers by the request accepted languages list.</p>
+<p><a href="https://anima.d250.hu:9001/p/@server-modules/multilanguage/lib/lang.js?line=1"><code>lang.js:1</code></a></p>
+<p>A string or document might be processed by the language module.<br />
+   The process will then discard irrelevant language chunks, and select the selected ones for the specific language.    </p>
+<p>The following string will be rendered as 'Hello world' in english and hungarian languages.<br />
+   <code>##&amp;en Hello World! ##&amp;hu Hello Világ! ##</code></p>
+<p><a href="https://anima.d250.hu:9001/p/@server-modules/multilanguage/lib/process.js?line=1"><code>process.js:1</code></a></p>
+<p>The <code>user.lang</code> is stored in the user database.</p>
+<p><a href="https://anima.d250.hu:9001/p/@server-modules/multilanguage/user_model/keys/language-keys.js?line=1"><code>language-keys.js:1</code></a></p>
+<pre>
+global
+ - default.js
+lib
+ - lang.js
+ - process.js
+ - translate.js
+pre-routes
+ - sessionlang.js
+routes
+ - get-data-file.js
+ - post-lang.js
+user_model
+ - keys
+</pre>
+<h2 id="themultilanguagemodule-1">The @multilanguage module</h2>
+<h4 id="vuemodulesmultilanguage">/@vue-modules/multilanguage</h4>
+<p>We create seperate webpack packers so that we have all languages statically translated.</p>
+<p><a href="https://anima.d250.hu:9001/p/@vue-modules/multilanguage/fork/vue-build-languages.js?line=1"><code>vue-build-languages.js:1</code></a></p>
+<p>each language will have it's own src folder for the vue build process</p>
+<p><a href="https://anima.d250.hu:9001/p/@vue-modules/multilanguage/init/vue-init-languages.js?line=1"><code>vue-init-languages.js:1</code></a></p>
+<p>Express middleware to make sure the right index page is served when requesting</p>
+<p><a href="https://anima.d250.hu:9001/p/@vue-modules/multilanguage/pre-index/index-pages.js?line=1"><code>index-pages.js:1</code></a></p>
+<p>Each nlanguage needs a vue-cli webpack configuration as well.</p>
+<p><a href="https://anima.d250.hu:9001/p/@vue-modules/multilanguage/start/vue-config.js?line=1"><code>vue-config.js:1</code></a></p>
+<pre>
+fork
+ - vue-build-languages.js
+init
+ - language-pages.js
+ - vue-init-languages.js
+pre-index
+ - index-pages.js
+start
+ - vue-config.js
+vue
+ - components
+</pre>
+<h2 id="thenodemailermodule">The @nodemailer module</h2>
+<h4 id="servermodulesnodemailer">/@server-modules/nodemailer</h4>
+<p>The nodemailer module allows to send mail from the backend, via localhost port 25 by default.</p>
+<p><a href="https://anima.d250.hu:9001/p/@server-modules/nodemailer/init/transporter.js?line=3"><code>transporter.js:3</code></a></p>
+<pre>
+init
+ - transporter.js
+</pre>
+<h2 id="thepassportmodule">The @passport module</h2>
+<h4 id="servermodulespassport">/@server-modules/passport</h4>
+<p>When the user changes the languge, his preference is saved</p>
+<p><a href="https://anima.d250.hu:9001/p/@server-modules/passport/hooks/update_user_lang.set_session.js?line=1"><code>update_user_lang.set_session.js:1</code></a></p>
+<p>This module defines the User mongo database;</p>
+<p><a href="https://anima.d250.hu:9001/p/@server-modules/passport/init/user.js?line=3"><code>user.js:3</code></a></p>
+<p>The lib-function <code>ß.lib.passport.isLoggedIn(req, res, next)</code> checks if the user is authenticated or not.<br />
+   It can be used as express middleware.</p>
+<p><a href="https://anima.d250.hu:9001/p/@server-modules/passport/lib/isLoggedIn.js?line=3"><code>isLoggedIn.js:3</code></a></p>
+<p>The local strategy is responsible for the email-password based login.</p>
+<p><a href="https://anima.d250.hu:9001/p/@server-modules/passport/passport/local.js?line=3"><code>local.js:3</code></a></p>
+<p>The <code>post-delete-account.json</code> requests deletes the user completley from the User database.</p>
+<p><a href="https://anima.d250.hu:9001/p/@server-modules/passport/routes/post-delete-account.js?line=3"><code>post-delete-account.js:3</code></a></p>
+<p>The <code>post-email.json</code> request checks if the given email address is a valid SMTP reciever.</p>
+<p><a href="https://anima.d250.hu:9001/p/@server-modules/passport/routes/post-email.js?line=3"><code>post-email.js:3</code></a></p>
+<p>The <code>post-login.json</code> request is responsible to log users in via email, password, and rem payload.</p>
+<p><a href="https://anima.d250.hu:9001/p/@server-modules/passport/routes/post-login.js?line=3"><code>post-login.js:3</code></a></p>
+<p>The <code>post-logout.json</code> route destroys the user session.</p>
+<p><a href="https://anima.d250.hu:9001/p/@server-modules/passport/routes/post-logout.js?line=3"><code>post-logout.js:3</code></a></p>
+<p>The <code>post-password-update.json</code> request</p>
+<p><a href="https://anima.d250.hu:9001/p/@server-modules/passport/routes/post-password-update.js?line=3"><code>post-password-update.js:3</code></a></p>
+<pre>
+express
+ - passport.js
+global
+ - passport.js
+hooks
+ - update_user_lang.set_session.js
+init
+ - serialization.js
+ - user.js
+lib
+ - create_user.js
+ - delete.js
+ - ensure_user.js
+ - get_password.js
+ - isLoggedIn.js
+ - login.js
+ - login_delay.js
+passport
+ - local.js
+routes
+ - logout.js
+ - post-delete-account.js
+ - post-email.js
+ - post-login.js
+ - post-logout.js
+ - post-password-update.js
+start
+ - socketio_user.js
+user_model
+ - keys
+ - methods
+</pre>
+<h2 id="thepassport_adminmodule">The @passport_admin module</h2>
+<h4 id="servermodulespassport_admin">/@server-modules/passport_admin</h4>
+<p>The hook function for <code>socket.emit('admin-delete-user', id)</code> deletes the appropriate user by the given id.<br />
+   If the id belongs to an admin then it won't be removed, otherwise the user will be deleted.<br />
+   In the end updated users are emitted back via <code>socket.emit('users', data)</code>.</p>
+<p><a href="https://anima.d250.hu:9001/p/@server-modules/passport_admin/hooks/adminsocket.delete-user.js?line=3"><code>adminsocket.delete-user.js:3</code></a></p>
+<p>The hook function for <code>socket.emit('get-users', arg)</code> finds the appropriate user/users by the given argument and emits these users back via <code>socket.emit('users', data)</code>.</p>
+<p><a href="https://anima.d250.hu:9001/p/@server-modules/passport_admin/hooks/adminsocket.get-users.js?line=3"><code>adminsocket.get-users.js:3</code></a></p>
+<p>The hook function for <code>socket.emit('admin-save-user-profile', data)</code> updates the given user profile, billing and shipping informations on the profile page.</p>
+<p><a href="https://anima.d250.hu:9001/p/@server-modules/passport_admin/hooks/adminsocket.save-user-profile.js?line=3"><code>adminsocket.save-user-profile.js:3</code></a></p>
+<p>The hook function for <code>socket.emit('admin-save-user', data)</code> saves and updates the given user datas.<br />
+   This searches for the user by <code>data._id</code>.</p>
+<p><a href="https://anima.d250.hu:9001/p/@server-modules/passport_admin/hooks/adminsocket.save-user.js?line=3"><code>adminsocket.save-user.js:3</code></a></p>
+<p>The lib-function <code>ß.lib.passport_admin.check_if_admin(id)</code> checks if the user with the given passport id has admin-level permissions on the website.<br />
+Those id's can be set in the <code>config/admin-passports.json</code> file or, in debug mode if the file exists <code>config/admin-passports.debug.json</code> is used.</p>
+<p><a href="https://anima.d250.hu:9001/p/@server-modules/passport_admin/lib/check_if_admin.js?line=3"><code>check_if_admin.js:3</code></a></p>
+<p>The lib-function <code>ß.lib.passport_admin.isLoggedInAdmin(req, res, next)</code> checks whether the authenticated user is either admin or not.<br />
+   If the user is not authenticated as admin then redirect to the login page, or inform about the failure.</p>
+<p><a href="https://anima.d250.hu:9001/p/@server-modules/passport_admin/lib/isLoggedInAdmin.js?line=3"><code>isLoggedInAdmin.js:3</code></a></p>
+<p>The lib-function <code>ß.lib.admin.is_master_password(password)</code> checks whether the given password is listed in the passwords config file <code>config/admin-passwords.json</code>.<br />
+   Note that there is no username associated with the password, the admin user has access right to every passport id account.<br />
+   The password listed here should be very hard to guess.</p>
+<p><a href="https://anima.d250.hu:9001/p/@server-modules/passport_admin/lib/is_master_password.js?line=3"><code>is_master_password.js:3</code></a></p>
+<pre>
+hooks
+ - adminsocket.delete-user.js
+ - adminsocket.get-users.js
+ - adminsocket.save-user-profile.js
+ - adminsocket.save-user.js
+ - session.is_admin.js
+lib
+ - check_if_admin.js
+ - isLoggedInAdmin.js
+ - is_master_password.js
+</pre>
+<h2 id="thepassport_facebookmodule">The @passport_facebook module</h2>
+<h4 id="servermodulespassport_facebook">/@server-modules/passport_facebook</h4>
+<p>The lib function <code>ß.lib.passport_facebook.config_auth()</code> loads or sets the appropriate facebook passport config file.<br />
+   The settings can be set in <code>config/passport_facebook.json</code> or <code>config/passport_facebook.debug.json</code>.<br />
+   To get passport-facebook to work, there needs to be a facebook app, and the config shall contains the secret-app-ID, the app-secret, and which data fields are required by the app.<br />
+   Under the hood, we use <a href="https://github.com/jaredhanson/passport-facebook">passport-facebook</a>.</p>
+<p><a href="https://anima.d250.hu:9001/p/@server-modules/passport_facebook/lib/config_auth.js?line=3"><code>config_auth.js:3</code></a></p>
+<pre>
+lib
+ - config_auth.js
+passport
+ - facebook.js
+routes
+ - auth-facebook-callback.js
+ - auth-facebook.js
+ - connect-facebook-callback.js
+ - connect-facebook.js
+ - unlink-facebook.js
+user_model
+ - keys
+</pre>
+<h2 id="thepassport_googlemodule">The @passport_google module</h2>
+<h4 id="servermodulespassport_google">/@server-modules/passport_google</h4>
+<p>The lib function <code>ß.lib.passport_google.config_auth()</code> loads or sets the appropriate google passport file.<br />
+   The settings can be set in <code>/config/passport_google.json</code> or in <code>/config/passport_google.debug.json</code>.<br />
+   To get passport-google to work, you should have a clientID, clientSecret and the callbackURL. These can be obtained from <a href="https://console.developers.google.com/">Google Developers Console</a>.<br />
+   We use <a href="https://github.com/jaredhanson/passport-google-oauth">passport-google-oauth</a>.</p>
+<p><a href="https://anima.d250.hu:9001/p/@server-modules/passport_google/lib/config_auth.js?line=3"><code>config_auth.js:3</code></a></p>
+<pre>
+lib
+ - config_auth.js
+passport
+ - google.js
+routes
+ - auth-google-callback.js
+ - auth-google.js
+ - connect-google-callback.js
+ - connect-google.js
+ - unlink-google.js
+user_model
+ - keys
+</pre>
+<h2 id="thepassport_hashmodule">The @passport_hash module</h2>
+<h4 id="servermodulespassport_hash">/@server-modules/passport_hash</h4>
+<p>The <code>post-email-request.json</code> request creates a new user if ncessery, and sends out an email.</p>
+<p><a href="https://anima.d250.hu:9001/p/@server-modules/passport_hash/routes/post-email-request.js?line=3"><code>post-email-request.js:3</code></a></p>
+<pre>
+hooks
+ - user_registration.send_hash.js
+lib
+ - hash.js
+ - okey_today.js
+ - send.js
+ - verify.js
+passport
+ - hash.js
+routes
+ - hash.js
+ - post-email-request.js
+ - post-email-update.js
+</pre>
+<h2 id="thereadmemodule">The @readme module</h2>
+<h4 id="servermodulesreadme">/@server-modules/readme</h4>
+<p>The README for the project is served under the <code>/README.html</code> url.</p>
+<p><a href="https://anima.d250.hu:9001/p/@server-modules/readme/routes/readme.js?line=7"><code>readme.js:7</code></a></p>
+<p>This module generates a readme automatically from comments that are marked with the <code>@DOC</code> tag at start.<br />
+   Both, single-line and multiline comments are supported. When the project is started source files are parsed and marked document comment blocks extracted.</p>
+<p><a href="https://anima.d250.hu:9001/p/@server-modules/readme/start/autodoc.js?line=3"><code>autodoc.js:3</code></a></p>
+<pre>
+routes
+ - readme.js
+start
+ - autodoc.js
+static
+ - github-markdown.css
+</pre>
+<h2 id="theservermodule">The @server module</h2>
+<h4 id="servermodulesserver">/@server-modules/server</h4>
+<p>Static assets like css files can be placed in any module or the project root, in a /static folder</p>
+<p><a href="https://anima.d250.hu:9001/p/@server-modules/server/express/serve_static.js?line=3"><code>serve_static.js:3</code></a></p>
+<p>Data representing assets like json files can be placed in any module or the project root, in a /data folder</p>
+<p><a href="https://anima.d250.hu:9001/p/@server-modules/server/express/serve_static.js?line=8"><code>serve_static.js:8</code></a></p>
+<h2 id="express">Express</h2>
+<p>Express is used by default in development mode, with the default Cache-Control max-age 0.<br />
+If the <code>ß.STATIC_OPTIONS</code> is <code>undefined</code> at inicialization, it will set max-age to 24h if production env. var is set.<br />
+Therefore, it is recommended to use <code>ß.STATIC_OPTIONS</code> for express static server routes.</p>
+<p><a href="https://anima.d250.hu:9001/p/@server-modules/server/global/app.js?line=6"><code>app.js:6</code></a></p>
+<p>We set the number of spaces for indentation to two in nn-production mode for better readability</p>
+<p><a href="https://anima.d250.hu:9001/p/@server-modules/server/global/app.js?line=23"><code>app.js:23</code></a></p>
+<p>The <code>server</code> module uses express as https server</p>
+<p><a href="https://anima.d250.hu:9001/p/@server-modules/server/server/https-server.js?line=35"><code>https-server.js:35</code></a></p>
+<pre>
+cert
+ - localhost-cert-config.txt
+ - localhost.crt
+ - localhost.csr
+ - localhost.key
+ - localhost.org.pem
+ - make-cert.sh
+express
+ - app-api.js
+ - bodyparser.js
+ - compression.js
+ - ejs.js
+ - serve_static.js
+ - static.js
+global
+ - app.js
+init
+ - await-https-server.js
+lib
+ - load_credentials.js
+ - requestRulesMatch.js
+ - rewrites.js
+ - serve_files.js
+ - serve_static.js
+post-index
+ - 404.js
+ - 500.js
+routes
+ - restart_server_process.js
+server
+ - export-boilerplate-variables.js
+ - https-server.js
+</pre>
+<h2 id="thesessionmodule">The @session module</h2>
+<h4 id="servermodulessession">/@server-modules/session</h4>
+<p>The session data can be accessed by the frontend on the <code>session.json</code> uri.</p>
+<p><a href="https://anima.d250.hu:9001/p/@server-modules/session/routes/session.js?line=3"><code>session.js:3</code></a></p>
+<pre>
+global
+ - sessionMiddleware.js
+hooks
+ - load_app.session.js
+ - load_socketio_complete.init_sessionMiddleware.js
+ - socket.session-data.js
+lib
+ - config_mongodb.js
+ - update_user.js
+routes
+ - post-session-data.js
+ - session.js
+</pre>
+<h2 id="thesocketiomodule">The @socketio module</h2>
+<h4 id="servermodulessocketio">/@server-modules/socketio</h4>
+<pre>
+hooks
+ - load_server.socketio.js
+</pre>
+<h2 id="thesocketiomodule-1">The @socketio module</h2>
+<h4 id="vuemodulessocketio">/@vue-modules/socketio</h4>
+<pre>
+hooks
+ - socket.hello_socket_io.js
+vue
+ - assets
+ - components
+</pre>
+<h2 id="theuser_profilemodule">The @user_profile module</h2>
+<h4 id="servermodulesuser_profile">/@server-modules/user_profile</h4>
+<pre>
+hooks
+ - update_profile.with_object.js
+lib
+ - update.js
+routes
+ - post_update_user_profile.js
+user_model
+ - keys
+ - methods
+</pre>
+<h2 id="theverifymodule">The @verify module</h2>
+<h4 id="servermodulesverify">/@server-modules/verify</h4>
+<p>The verify module's email-verify checks the validation of email addresses via SMTP connection.<br />
+It fails if there is no domain, or no address that can recieve a message.</p>
+<p><a href="https://anima.d250.hu:9001/p/@server-modules/verify/lib/email.js?line=3"><code>email.js:3</code></a></p>
+<pre>
+lib
+ - email.js
+</pre>
+<h2 id="theappmodule">The @app module</h2>
+<h4 id="vuemodulesapp">/@vue-modules/app</h4>
+<p>Entry point of the frontend is main.js</p>
+<p><a href="https://anima.d250.hu:9001/p/@vue-modules/app/vue/main.js?line=2"><code>main.js:2</code></a></p>
+<p>Socketio will only connect if a passport user is logged in. Override possible.</p>
+<p><a href="https://anima.d250.hu:9001/p/@vue-modules/app/vue/main.js?line=15"><code>main.js:15</code></a></p>
+<p>Use a /static file in a template<br />
+<img :src="$app.uri('/some.svg')" height="200px">  </p>
+<p>Use an asset file in a template<br />
+<img :src="require('@/assets/some.svg')" height="200px"></p>
+<p><a href="https://anima.d250.hu:9001/p/@vue-modules/app/vue/main.js?line=59"><code>main.js:59</code></a></p>
+<pre>
+global
+ - languages.js
+ - main.js
+ - pages.js
+vue
+ - App.vue
+ - app-functions.js
+ - en.html
+ - hu.html
+ - index.html
+ - main.js
+ - main.vue
+ - navigation.vue
+</pre>
+<h2 id="thebootstrapvuemodule">The @bootstrap-vue module</h2>
+<h4 id="vuemodulesbootstrapvue">/@vue-modules/bootstrap-vue</h4>
+<pre>
+vue
+ - components
+</pre>
+<h2 id="thefontawesome5module">The @fontawesome5 module</h2>
+<h4 id="vuemodulesfontawesome5">/@vue-modules/fontawesome5</h4>
+<pre>
+init
+ - vuetify-fa.js
+</pre>
+<h2 id="thejsoneditormodule">The @jsoneditor module</h2>
+<h4 id="vuemodulesjsoneditor">/@vue-modules/jsoneditor</h4>
+<pre>
+</pre>
+<h2 id="theloginmodule">The @login module</h2>
+<h4 id="vuemoduleslogin">/@vue-modules/login</h4>
+<pre>
+vue
+ - assets
+ - components
+</pre>
+<h2 id="thevuemodule">The @vue module</h2>
+<h4 id="vuemodulesvue">/@vue-modules/vue</h4>
+<p>vue build runs as a forked process</p>
+<p><a href="https://anima.d250.hu:9001/p/@vue-modules/vue/fork/vue-build.js?line=1"><code>vue-build.js:1</code></a></p>
+<p>vue inspect is disabled by default, but can be enabled for analisation</p>
+<p><a href="https://anima.d250.hu:9001/p/@vue-modules/vue/fork/vue-inspect.js?line=17"><code>vue-inspect.js:17</code></a></p>
+<p>vue serve runs as a forked process</p>
+<p><a href="https://anima.d250.hu:9001/p/@vue-modules/vue/fork/vue-serve.js?line=1"><code>vue-serve.js:1</code></a></p>
+<p>we create a <code>ß.vue_modules</code> object, which is a subset of <code>ß.modules</code>.</p>
+<p><a href="https://anima.d250.hu:9001/p/@vue-modules/vue/global/vue-modules.js?line=1"><code>vue-modules.js:1</code></a></p>
+<p>The built files will reside in <code>ß.VAR/app</code></p>
+<p><a href="https://anima.d250.hu:9001/p/@vue-modules/vue/index/index.js?line=3"><code>index.js:3</code></a></p>
+<p>The vue source tree is built up at the init stage</p>
+<p><a href="https://anima.d250.hu:9001/p/@vue-modules/vue/init/vue-init.js?line=1"><code>vue-init.js:1</code></a></p>
+<p>We need our detagger, a fake module for webpack. It will expose our <code>ß.lib.multilanguage.process</code> function.</p>
+<p><a href="https://anima.d250.hu:9001/p/@vue-modules/vue/init/vue-init.js?line=4"><code>vue-init.js:4</code></a></p>
+<p>The vue source tree contains symlinks to the real files of the project - based on the modules used.</p>
+<p><a href="https://anima.d250.hu:9001/p/@vue-modules/vue/lib/uplink_source_tree.js?line=1"><code>uplink_source_tree.js:1</code></a></p>
+<p>Based on <code>ß.vue_modules</code> we create a subset of node modules for vue</p>
+<p><a href="https://anima.d250.hu:9001/p/@vue-modules/vue/lib/uplink_source_tree.js?line=38"><code>uplink_source_tree.js:38</code></a></p>
+<p>The <code>src</code> folder is actually a unified version of all vue folders</p>
+<p><a href="https://anima.d250.hu:9001/p/@vue-modules/vue/lib/uplink_source_tree.js?line=41"><code>uplink_source_tree.js:41</code></a></p>
+<p>The default index build is a single-language, but has hot reload for development. It will work with symlinks to the original sourcefiles. Push needed if the file-structure changes.</p>
+<p><a href="https://anima.d250.hu:9001/p/@vue-modules/vue/start/vue-config.js?line=1"><code>vue-config.js:1</code></a></p>
+<p>The <code>Ł</code> debug function has been implemented for the vue frontend!</p>
+<p><a href="https://anima.d250.hu:9001/p/@vue-modules/vue/start/vue-debuglog.js?line=1"><code>vue-debuglog.js:1</code></a></p>
+<p>The most important variables are also exported vie the vue-cli env file</p>
+<p><a href="https://anima.d250.hu:9001/p/@vue-modules/vue/start/vue-env.js?line=3"><code>vue-env.js:3</code></a></p>
+<p>UPDATE this.<em>vm.$socket.emit has to be replaced with this.</em>vm.$socket.client.emit</p>
+<p><a href="https://anima.d250.hu:9001/p/@vue-modules/vue/vue/disabled_store.js?line=10"><code>disabled_store.js:10</code></a></p>
+<pre>
+fork
+ - vue-build.js
+ - vue-inspect.js
+ - vue-serve.js
+global
+ - var-vue.js
+ - vue-modules.js
+index
+ - index.js
+init
+ - await-vue-build.js
+ - vue-init.js
+lib
+ - uplink_source_tree.js
+start
+ - vue-config.js
+ - vue-debuglog.js
+ - vue-env.js
+ - vue-files.js
+ - vue-leadtoval.js
+vue
+ - assets
+ - components
+ - disabled_store.js
+ - router.js
+</pre>
+<h2 id="thevueincludemodule">The @vueinclude module</h2>
+<h4 id="vuemodulesvueinclude">/@vue-modules/vueinclude</h4>
+<p>At the project boot process the var/vue-include folder is processed, txt, html, csv files are pre-processed.</p>
+<p><a href="https://anima.d250.hu:9001/p/@vue-modules/vueinclude/lib/build.js?line=3"><code>build.js:3</code></a></p>
+<p>clouddir html files are prepared for vue, by parsing the html and by stripping tags and putting them into a preformatted-html template.  </p>
+<p><code>ß.vueinclude_html_parser_options</code> - use options from <a href="https://www.npmjs.com/package/node-html-parser">node-html-parser</a><br />
+<code>ß.vueinclude_striptags_allowed_tags</code> and <code>ß.vueinclude_striptags_tag_replacement</code> - use options from <a href="https://www.npmjs.com/package/striptags">striptags</a></p>
+<p><a href="https://anima.d250.hu:9001/p/@vue-modules/vueinclude/lib/html.js?line=10"><code>html.js:10</code></a></p>
+<p>clouddir txt files are prepared for vue</p>
+<p><a href="https://anima.d250.hu:9001/p/@vue-modules/vueinclude/lib/txt.js?line=3"><code>txt.js:3</code></a></p>
+<pre>
+init
+ - vueinclude.js
+lib
+ - build.js
+ - html.js
+ - txt.js
+ - vue.js
+routes
+ - build.js
+start
+ - vue-include.js
+vue
+ - vue-include
+ - vue-include.vue
+</pre>
+<h2 id="thevuetifymodule">The @vuetify module</h2>
+<h4 id="vuemodulesvuetify">/@vue-modules/vuetify</h4>
+<p>Vuetify is a UI liberary.</p>
+<p><a href="https://anima.d250.hu:9001/p/@vue-modules/vuetify/routes/vuetify.js?line=5"><code>vuetify.js:5</code></a></p>
+<pre>
+routes
+ - vuetify.js
+vue
+ - assets
+ - components
+ - plugins
+</pre>
+<h2 id="thevuexmodule">The @vuex module</h2>
+<h4 id="vuemodulesvuex">/@vue-modules/vuex</h4>
+<p>we create a <code>ß.vuex_modules</code> object, which is a subset of <code>ß.modules</code>.</p>
+<p><a href="https://anima.d250.hu:9001/p/@vue-modules/vuex/global/vuex-modules.js?line=1"><code>vuex-modules.js:1</code></a></p>
+<p>The vuex source tree is built up at the init stage</p>
+<p><a href="https://anima.d250.hu:9001/p/@vue-modules/vuex/init/vuex-init.js?line=1"><code>vuex-init.js:1</code></a></p>
+<p>The vue source tree contains symlinks to the real files of the project - based on the modules used.</p>
+<p><a href="https://anima.d250.hu:9001/p/@vue-modules/vuex/lib/uplink_source_tree.js?line=1"><code>uplink_source_tree.js:1</code></a></p>
+<p>Based on <code>ß.vuex_modules</code> we create a subset of node modules for vue</p>
+<p><a href="https://anima.d250.hu:9001/p/@vue-modules/vuex/lib/uplink_source_tree.js?line=46"><code>uplink_source_tree.js:46</code></a></p>
+<p>The <code>src</code> folder is actually a unified version of all vue folders</p>
+<p><a href="https://anima.d250.hu:9001/p/@vue-modules/vuex/lib/uplink_source_tree.js?line=49"><code>uplink_source_tree.js:49</code></a></p>
+<pre>
+global
+ - vuex-modules.js
+init
+ - vuex-init.js
+lib
+ - create_store_file.js
+ - uplink_source_tree.js
+vuex
+ - server.js
+ - socket.js
+</pre>

@@ -1,0 +1,1 @@
+{"googleAuth":{"clientID":"your-secret-clientID-here","clientSecret":"your-client-secret-here","callbackURL":"https://anima.d250.hu/auth/google/callback"}}
