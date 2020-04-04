@@ -1,11 +1,8 @@
 <template>
     <v-content id="main">
         <transition name="component-fade" mode="out-in">
-            <img v-if="at('') || at('boilerplate') || at('session')" alt="ßoilerplate logo" :src="require('@/assets/boilerplate.png')" key="a" />
-            <img v-if="at('vuetify')" alt="Vuetify logo" :src="require('@/assets/vuetify.png')" />
-            <img v-if="at('vue')" alt="Vue logo" :src="require('@/assets/vue.png')" key="b" />
-            <img v-if="at('socket-io')" alt="socket.io logo" :src="require('@/assets/socketio.png')" key="a" />
-        </transition>
+            <img alt="Anima logo" src="require('@/assets/valto-logo-8b-web.png')" key="a" />
+		</transition>
         <transition name="component-fade" mode="out-in">
           
           <animaform v-if="at('') || at('form')" msg="##&en Welcome to the ßoilerplate Vue.js stack ##&hu A ßoilerplate Vue stack ##" />
