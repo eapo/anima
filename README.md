@@ -653,6 +653,9 @@ var
  - boilerplate.sh
  - codepad-project.modules.json
  - debug
+ - debuglog.js
+ - https-server.port
+ - leadtoval.js
  - log
  - project.log
  - project.pid
