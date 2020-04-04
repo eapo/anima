@@ -1,7 +1,7 @@
 <template>
     <v-app-bar app>
         <v-toolbar-items>
-            <v-btn text to="/">HOME</v-btn>
+            <v-btn text to="/about">HOME</v-btn>
             <v-btn text to="/form">Form</v-btn>
             
             <language_selector></language_selector>
@@ -13,6 +13,7 @@
 
 <script>
 import language_selector from "@/components/LanguageSelector.vue";
+import about from "@/about.vue";
 import form from "@/form.vue";
 
   /*

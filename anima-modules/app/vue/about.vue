@@ -1,12 +1,11 @@
-
-
 <template>
     <v-content id="main">
         <transition name="component-fade" mode="out-in">
+          <transition name="component-fade" mode="out-in">
+            <img alt="Anima logo" :src="require('@/assets/valto-logo-8b-web.png')" key="a" style="max-width:60vw" />
+		</transition>
           
-          <about v-if="at('') || at('about')" msg="##&en Welcome to the ßoilerplate Vue.js stack ##&hu A ßoilerplate Vue stack ##" />
-
-          <form v-if="at('form')" msg="##&en Welcome to the ßoilerplate Vue.js stack ##&hu A ßoilerplate Vue stack ##" />
+          <animaform v-if="at('') || at('form')" msg="##&en Welcome to the ßoilerplate Vue.js stack ##&hu A ßoilerplate Vue stack ##" />
           
             <hello_boilerplate v-if="at('') || at('boilerplate')" msg="##&en Welcome to the ßoilerplate Vue.js stack ##&hu A ßoilerplate Vue stack ##" />
             <hello_vue v-if="at('vue')" msg="##&en The ##&hu A ## ßoilerplate Vue.js module" />
@@ -21,8 +20,6 @@
 </template>
 
 <script>
-  
-import about from "@/about.vue";  
 import hello_boilerplate from "@/components/HelloBoilerplate.vue";
 import hello_vue from "@/components/HelloVue.vue";
 import hello_vuetify from "@/components/HelloVuetify.vue";
@@ -33,7 +30,7 @@ import hello_login from "@/components/HelloLogin.vue";
 
 import hello_socket_io from "@/components/HelloSocketIo.vue";
   
-import form from "@/form.vue";
+import animaform from "@/form.vue";
 
 import hello_payment from "@/components/HelloPayment.vue";
 //import hello_paypal from "@/components/HelloPayPal.vue";
@@ -64,8 +61,7 @@ export default {
         hello_login,
         hello_socket_io,
         hello_payment,
-        form,
-        about
+        animaform
         //hello_paypal
         //login_dialog
         //hello_bootstrap

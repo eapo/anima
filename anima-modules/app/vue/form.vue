@@ -1,26 +1,48 @@
 <template>
     <div class="hello">
-        <h1>{{ msg }}</h1>
-        <p>
-            For details of this project,<br />
-            check out the <a href="/README.html" target="_blank" rel="noopener">README</a>.
-        </p>
-        <p>
-            About the ßoilerplate framework,<br />
-            best is to refer to the <a href="https://github.com/LaKing/boilerplate" target="_blank" rel="noopener">ßoilerplate on GitHub</a> page.
-        </p>
-        <p>
-            Our development environment is a collaborative online editor,<br />
-            the latest boilerplate based implementation is called Codepad<br />
-            It has <a href="https://github.com/LaKing/codepad" target="_blank" rel="noopener">sourcecode on GitHub</a> and a
-            <a href="https://codepad-demo.d250.hu:9001/" target="_blank" rel="noopener">DEMO instance</a>
-        </p>
-        <v-container><json_editor ref="editor" :json="ß" /> </v-container>
+        <h1>Karantén Megoldás!?</h1>
+        <v-text-field
+                  v-model="placeholder"
+                  label="Ki vagyok én?"
+        ></v-text-field>
+        <v-text-field
+                  v-model="placeholder"
+                  label="Mihez értek, miben vagyok jó?"
+        ></v-text-field>      
+        <v-text-field
+                  v-model="placeholder"
+                  label="Akármi bármi"
+        ></v-text-field>      
+        <v-text-field
+                  v-model="placeholder"
+                  label="Akármi bármi"
+        ></v-text-field>      
+        <v-text-field
+                  v-model="placeholder"
+                  label="Akármi bármi"
+        ></v-text-field>     
+		<v-textarea
+          name="input-7-1"
+          label="Ez egy textarea"
+          value=""
+          hint="Textarea"
+        ></v-textarea>      
+        <v-text-field
+                  v-model="placeholder"
+                  label="Akármi bármi"
+        ></v-text-field>      
+        <v-text-field
+                  v-model="placeholder"
+                  label="Akármi bármi"
+        ></v-text-field>            
     </div>
 </template>
 
 <script>
 // use a Jsoneditor to display boilerplate variables
+  
+// https://vuetifyjs.com/en/components/text-fields/
+  
 import json_editor from "vue2-jsoneditor";
 
 export default {
