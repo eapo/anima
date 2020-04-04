@@ -1,6 +1,8 @@
 ## The app module
 #### /anima-modules/app
 <pre>
+init
+ - load_questions.json
 vue
  - about.vue
  - assets
