@@ -671,6 +671,7 @@ var
 #### /anima-modules/app
 <pre>
 vue
+ - about.vue
  - assets
  - form.vue
  - main.vue
