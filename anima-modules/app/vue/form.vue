@@ -17,9 +17,6 @@
                 <v-btn text>Button</v-btn>
             </v-card-actions>
         </v-card>
-        <!--
-        *Erőforrás
-Olyan szellemi, anyagi, gazdasági, társadalmi tényező, amely lehetőséget ad vagy alkalmas eszköz lehet adott cél megvalósításához, bizonyos dolog fejlesztéséhez. -->
     </div>
 </template>
 

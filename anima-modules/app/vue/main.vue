@@ -1,12 +1,12 @@
-
+anima
 
 <template>
     <v-content id="main">
         <transition name="component-fade" mode="out-in">
           
-          <about v-if="at('') || at('about')"/>
+          <animaabout v-if="at('') || at('about')"/>
 
-          <form v-if="at('form')"/>
+          <animaform v-if="at('form')"/>
           
             <hello_boilerplate v-if="at('') || at('boilerplate')" msg="##&en Welcome to the ßoilerplate Vue.js stack ##&hu A ßoilerplate Vue stack ##" />
 
@@ -19,8 +19,8 @@
   
 import hello_boilerplate from "@/components/HelloBoilerplate.vue";
   
-import form from "@/form.vue";
-import about from "@/about.vue";  
+import animaform from "@/form.vue";
+import animaabout from "@/about.vue";  
 
 
 export default {
@@ -33,8 +33,8 @@ export default {
     components: {
         hello_boilerplate,
 
-        form,
-        about
+        animaform,
+        animaabout
 
     },
     methods: {
