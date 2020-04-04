@@ -370,6 +370,8 @@ Underlying directories will be created.</p>
  - vueinclude
  - vuetify
  - vuex
+anima-modules
+ - app
 boilerplate
  - .gitignore
  - LICENSE.md
@@ -408,6 +410,36 @@ var
  - project.log
  - project.pid
  - vue
+</pre>
+<h2 id="theappmodule">The app module</h2>
+<h4 id="animamodulesapp">/anima-modules/app</h4>
+<pre>
+</pre>
+<h2 id="theappmodule-1">The @app module</h2>
+<h4 id="vuemodulesapp">/@vue-modules/app</h4>
+<p>Entry point of the frontend is main.js</p>
+<p><a href="https://anima.d250.hu:9001/p/@vue-modules/app/vue/main.js?line=2"><code>main.js:2</code></a></p>
+<p>Socketio will only connect if a passport user is logged in. Override possible.</p>
+<p><a href="https://anima.d250.hu:9001/p/@vue-modules/app/vue/main.js?line=15"><code>main.js:15</code></a></p>
+<p>Use a /static file in a template<br />
+<img :src="$app.uri('/some.svg')" height="200px">  </p>
+<p>Use an asset file in a template<br />
+<img :src="require('@/assets/some.svg')" height="200px"></p>
+<p><a href="https://anima.d250.hu:9001/p/@vue-modules/app/vue/main.js?line=59"><code>main.js:59</code></a></p>
+<pre>
+global
+ - languages.js
+ - main.js
+ - pages.js
+vue
+ - App.vue
+ - app-functions.js
+ - en.html
+ - hu.html
+ - index.html
+ - main.js
+ - main.vue
+ - navigation.vue
 </pre>
 <h2 id="theadminmodule">The @admin module</h2>
 <h4 id="adminmodulesadmin">/@admin-modules/admin</h4>
@@ -958,32 +990,6 @@ It fails if there is no domain, or no address that can recieve a message.</p>
 <pre>
 lib
  - email.js
-</pre>
-<h2 id="theappmodule">The @app module</h2>
-<h4 id="vuemodulesapp">/@vue-modules/app</h4>
-<p>Entry point of the frontend is main.js</p>
-<p><a href="https://anima.d250.hu:9001/p/@vue-modules/app/vue/main.js?line=2"><code>main.js:2</code></a></p>
-<p>Socketio will only connect if a passport user is logged in. Override possible.</p>
-<p><a href="https://anima.d250.hu:9001/p/@vue-modules/app/vue/main.js?line=15"><code>main.js:15</code></a></p>
-<p>Use a /static file in a template<br />
-<img :src="$app.uri('/some.svg')" height="200px">  </p>
-<p>Use an asset file in a template<br />
-<img :src="require('@/assets/some.svg')" height="200px"></p>
-<p><a href="https://anima.d250.hu:9001/p/@vue-modules/app/vue/main.js?line=59"><code>main.js:59</code></a></p>
-<pre>
-global
- - languages.js
- - main.js
- - pages.js
-vue
- - App.vue
- - app-functions.js
- - en.html
- - hu.html
- - index.html
- - main.js
- - main.vue
- - navigation.vue
 </pre>
 <h2 id="thebootstrapvuemodule">The @bootstrap-vue module</h2>
 <h4 id="vuemodulesbootstrapvue">/@vue-modules/bootstrap-vue</h4>

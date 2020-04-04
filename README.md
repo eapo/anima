@@ -622,6 +622,8 @@ Use an asset file in a template
  - vueinclude
  - vuetify
  - vuex
+anima-modules
+ - app
 boilerplate
  - .gitignore
  - LICENSE.md
@@ -660,6 +662,50 @@ var
  - project.log
  - project.pid
  - vue
+</pre>
+
+
+
+## The app module
+#### /anima-modules/app
+<pre>
+</pre>
+
+## The @app module
+#### /@vue-modules/app
+Entry point of the frontend is main.js
+
+
+[`main.js:2`](https://anima.d250.hu:9001/p/@vue-modules/app/vue/main.js?line=2)
+
+Socketio will only connect if a passport user is logged in. Override possible.
+
+
+[`main.js:15`](https://anima.d250.hu:9001/p/@vue-modules/app/vue/main.js?line=15)
+
+Use a /static file in a template  
+<img :src="$app.uri('/some.svg')" height="200px">  
+  
+Use an asset file in a template  
+<img :src="require('@/assets/some.svg')" height="200px">
+
+
+[`main.js:59`](https://anima.d250.hu:9001/p/@vue-modules/app/vue/main.js?line=59)
+
+<pre>
+global
+ - languages.js
+ - main.js
+ - pages.js
+vue
+ - App.vue
+ - app-functions.js
+ - en.html
+ - hu.html
+ - index.html
+ - main.js
+ - main.vue
+ - navigation.vue
 </pre>
 
 
@@ -1467,45 +1513,6 @@ It fails if there is no domain, or no address that can recieve a message.
 <pre>
 lib
  - email.js
-</pre>
-
-
-
-## The @app module
-#### /@vue-modules/app
-Entry point of the frontend is main.js
-
-
-[`main.js:2`](https://anima.d250.hu:9001/p/@vue-modules/app/vue/main.js?line=2)
-
-Socketio will only connect if a passport user is logged in. Override possible.
-
-
-[`main.js:15`](https://anima.d250.hu:9001/p/@vue-modules/app/vue/main.js?line=15)
-
-Use a /static file in a template  
-<img :src="$app.uri('/some.svg')" height="200px">  
-  
-Use an asset file in a template  
-<img :src="require('@/assets/some.svg')" height="200px">
-
-
-[`main.js:59`](https://anima.d250.hu:9001/p/@vue-modules/app/vue/main.js?line=59)
-
-<pre>
-global
- - languages.js
- - main.js
- - pages.js
-vue
- - App.vue
- - app-functions.js
- - en.html
- - hu.html
- - index.html
- - main.js
- - main.vue
- - navigation.vue
 </pre>
 
 
