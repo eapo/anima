@@ -2,7 +2,7 @@
     <v-app-bar app>
         <v-toolbar-items>
             <v-btn text to="/">HOME</v-btn>
-            <v-btn text to="/boilerplate">Boilerplate</v-btn>
+            <v-btn text to="/form">Form</v-btn>
             
             <language_selector></language_selector>
           	<v-btn v-if="$store.state.server.session.is_admin" text @click="open_admin()">Admin</v-btn>
@@ -13,6 +13,7 @@
 
 <script>
 import language_selector from "@/components/LanguageSelector.vue";
+import form from "@/form.vue";
 
   /*
   
@@ -34,7 +35,8 @@ export default {
         };
     },
     components: {
-        language_selector
+        language_selector, 
+        form
     },
     methods:{
       open_editor: function () {   

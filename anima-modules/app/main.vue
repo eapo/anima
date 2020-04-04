@@ -7,6 +7,9 @@
             <img v-if="at('socket-io')" alt="socket.io logo" :src="require('@/assets/socketio.png')" key="a" />
         </transition>
         <transition name="component-fade" mode="out-in">
+          
+          <animaform v-if="at('') || at('form')" msg="##&en Welcome to the ßoilerplate Vue.js stack ##&hu A ßoilerplate Vue stack ##" />
+          
             <hello_boilerplate v-if="at('') || at('boilerplate')" msg="##&en Welcome to the ßoilerplate Vue.js stack ##&hu A ßoilerplate Vue stack ##" />
             <hello_vue v-if="at('vue')" msg="##&en The ##&hu A ## ßoilerplate Vue.js module" />
             <hello_vuetify v-if="at('vuetify')" msg="##&en The ##&hu A ## ßoilerplate Vuetify module" />
@@ -30,6 +33,8 @@ import hello_login from "@/components/HelloLogin.vue";
 
 import hello_socket_io from "@/components/HelloSocketIo.vue";
   
+import animaform from "@/form.vue";
+
 import hello_payment from "@/components/HelloPayment.vue";
 //import hello_paypal from "@/components/HelloPayPal.vue";
 
@@ -59,6 +64,7 @@ export default {
         hello_login,
         hello_socket_io,
         hello_payment,
+        animaform
         //hello_paypal
         //login_dialog
         //hello_bootstrap
