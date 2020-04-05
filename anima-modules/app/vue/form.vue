@@ -49,7 +49,7 @@ export default {
             return this.anima_questions[i].type === "textarea";
         },
         next() {
-            var answers = ł(this.$store.state, "server.session.data") || [];
+            var answers = this.$store.state.server.session.data || [];
             answers.push({ question: this.anima_questions[i], answer: this.answer });
 
             this.$store.dispatch("server/save_session_data", answers);

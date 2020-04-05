@@ -4,8 +4,7 @@
     { "question": "Mihez értek, miben vagyok jó?" },
     { "question": "Mi motivál engem?" },
     { "question": "Hogyan érint a karantén?" },
-    { "question": "Mit akarok tenni ez idő alatt?",        "type": "textarea"
- },
+    { "question": "Mit akarok tenni ez idő alatt?", "type": "textarea" },
     {
         "question": "Milyen erőforrásokra van szükségem?",
         "type": "textarea",
