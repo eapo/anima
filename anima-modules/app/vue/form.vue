@@ -64,6 +64,8 @@ export default {
             if (this.current_question < ß.ANIMA_QUESTIONS.length) this.current_question++;
         },
         back() {
+            this.answer = "";
+
             if (this.current_question > 0) this.current_question--;
         },
         has_next() {
