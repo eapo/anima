@@ -1,4 +1,7 @@
 module.exports = function(session) {
+  
+  Ł(session);
+  
     if (!session) return;
     if (!session.data) return;
     if (!session.data[0]) return;

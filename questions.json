@@ -1,8 +1,8 @@
 [
     { "question": "Email cím" },
     { "question": "Ki vagyok én?" },
-    { "question": "Mihez értek, miben vagyok jó?" },
-    { "question": "Mi motivál engem?" },
+    { "question": "Mihez értek, miben vagyok jó?", "type": "textarea" },
+    { "question": "Mi motivál engem?", "type": "textarea" },
     { "question": "Hogyan érint a karantén?" },
     { "question": "Mit akarok tenni ez idő alatt?", "type": "textarea" },
     {
