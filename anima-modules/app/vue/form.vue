@@ -19,7 +19,6 @@
                 <v-btn :disabled="!has_next()" depressed large color="primary" @click="next()" text>Tovább&rarr;</v-btn>
             </v-card-actions>
         </v-card>
-        is {{ $store.state.server.session.data }}
     </div>
 </template>
 
