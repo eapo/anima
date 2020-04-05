@@ -6,17 +6,17 @@
                 <v-list-item-content>
                     <div class="overline mb-4"></div>
                     <v-list-item-title class="headline mb-1">{{ get_question(current_question).question }}</v-list-item-title>
-                    <v-list-item-subtitle>{{ get_question(current_question).description }}</v-list-item-subtitle>
 
                     <v-text-field v-if="!is_textarea(current_question)" v-model="answer" label="Regular"></v-text-field>
                     <v-textarea v-if="is_textarea(current_question)" v-model="answer" solo name="input-7-4" label="Solo textarea"></v-textarea>
+                    <v-list-item-subtitle>{{ get_question(current_question).description }}</v-list-item-subtitle>
                 </v-list-item-content>
             </v-list-item>
 
             <v-card-actions>
-                <v-btn v-disabled="!has_back()" depressed large color="primary" @click="back()" text>&larr;Vissza</v-btn>
+                <v-btn :disabled="!has_back()" depressed large color="primary" @click="back()" text>&larr;Vissza</v-btn>
                 <v-spacer></v-spacer>
-                <v-btn v-disabled="!has_next()" depressed large color="primary" @click="next()" text>Tovább&rarr;</v-btn>
+                <v-btn :disabled="!has_next()" depressed large color="primary" @click="next()" text>Tovább&rarr;</v-btn>
             </v-card-actions>
         </v-card>
         is {{ $store.state.server.session.data }}
@@ -28,12 +28,6 @@
 
 // https://vuetifyjs.com/en/components/text-fields/
 
-function validateEmail(email) 
-{
-        var re = /\S+@\S+\.\S+/;
-        return re.test(email);
-}
-  
 export default {
     name: "HelloWorld",
     data: function() {
@@ -48,6 +42,10 @@ export default {
         msg: String
     },
     methods: {
+        validateEmail(email) {
+            var re = /\S+@\S+\.\S+/;
+            return re.test(email);
+        },
         get_question(i) {
             return this.anima_questions[i];
         },
@@ -56,7 +54,10 @@ export default {
         },
         next() {
             var answers = this.$store.state.server.session.data || [];
-            answers.push({answer: this.answer, question: this.anima_questions[this.current_question].question});
+            var i = this.current_question;
+            // if (i==0) { this.validateEmail(this.answer) }
+
+            answers[i] = { question: this.anima_questions[i].question, answer: this.answer };
 
             this.$store.dispatch("server/save_session_data", answers);
             this.answer = "";
@@ -74,7 +75,8 @@ export default {
         }
     },
     components: {},
-    mounted() {}
+    mounted() {},
+    computed: {}
 };
 </script>
 
@@ -96,5 +98,19 @@ li {
 
 a {
     color: #22c;
+}
+.v-input input {
+    height: 2em;
+    font-size: 120%;
+    max-width: 96%;
+}
+.v-text-field input {
+    flex: 1 1 auto;
+    line-height: 1.25em;
+    font-size: 120%;
+    padding: 0.2em 0;
+    max-width: 96%;
+    min-width: 0;
+    width: 100%;
 }
 </style>

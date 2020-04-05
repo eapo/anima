@@ -47,7 +47,7 @@ import hello_payment from "@/components/HelloPayment.vue";
 */
 
 export default {
-    name: "app",
+    name: "about",
     data: function() {
         return {
             //open_login_dialog: false
