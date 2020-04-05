@@ -56,7 +56,7 @@ export default {
         },
         next() {
             var answers = this.$store.state.server.session.data || [];
-            answers.push({ question: this.anima_questions[i], answer: this.answer });
+            answers.push({answer: this.answer, question: this.anima_questions[this.current_question].question});
 
             this.$store.dispatch("server/save_session_data", answers);
             this.answer = "";

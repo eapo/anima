@@ -1,5 +1,3 @@
-anima
-
 <template>
     <v-content id="main">
         <transition name="component-fade" mode="out-in">
