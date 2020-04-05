@@ -28,6 +28,12 @@
 
 // https://vuetifyjs.com/en/components/text-fields/
 
+function validateEmail(email) 
+{
+        var re = /\S+@\S+\.\S+/;
+        return re.test(email);
+}
+  
 export default {
     name: "HelloWorld",
     data: function() {
