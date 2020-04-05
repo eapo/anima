@@ -3,7 +3,6 @@
 <pre>
 init
  - load_questions.js
- - load_questions.json
 vue
  - about.vue
  - assets

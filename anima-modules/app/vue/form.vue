@@ -19,7 +19,7 @@
                 <v-btn v-disabled="!has_next()" depressed large color="primary" @click="next()" text>Tovább&rarr;</v-btn>
             </v-card-actions>
         </v-card>
-      is {{$store.state.server.session.data}}
+        is {{ $store.state.server.session.data }}
     </div>
 </template>
 
@@ -49,16 +49,13 @@ export default {
             return this.anima_questions[i].type === "textarea";
         },
         next() {
-          	
-          	var answers = ł(this.$store.state, "server.session.data") || [];
-          	answers.push({question: this.anima_questions[i], answer: this.answer});
-          	
-            if (this.current_question < ß.ANIMA_QUESTIONS.length) this.current_question++;
-          
-            
-          
-          	this.$store.dispatch("server/save_session_data", {  });
+            var answers = ł(this.$store.state, "server.session.data") || [];
+            answers.push({ question: this.anima_questions[i], answer: this.answer });
+
+            this.$store.dispatch("server/save_session_data", answers);
             this.answer = "";
+
+            if (this.current_question < ß.ANIMA_QUESTIONS.length) this.current_question++;
         },
         back() {
             if (this.current_question > 0) this.current_question--;
