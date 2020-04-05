@@ -2,7 +2,7 @@
 #### /anima-modules/app
 <pre>
 init
- - load_questions.json
+ - load_questions.js
 vue
  - about.vue
  - assets

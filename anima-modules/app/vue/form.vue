@@ -1,20 +1,22 @@
 <template>
     <div class="hello">
-        <h1>Karantén Megoldás!?</h1>
-        <v-card class="mx-auto" max-width="344" outlined>
+        <h1>Karantén! Megoldás?</h1>
+        <v-card class="mx-auto" max-width="800" outlined>
             <v-list-item three-line>
                 <v-list-item-content>
-                    <div class="overline mb-4">OVERLINE</div>
-                    <v-list-item-title class="headline mb-1">Headline 5</v-list-item-title>
-                    <v-list-item-subtitle>Greyhound divisely hello coldly fonwderfully</v-list-item-subtitle>
-                </v-list-item-content>
+                    <div class="overline mb-4"></div>
+                    <v-list-item-title class="headline mb-1">{{ get_question(current_question).question }}</v-list-item-title>
+                    <v-list-item-subtitle>{{ get_question(current_question).description }}</v-list-item-subtitle>
 
-                <v-list-item-avatar tile size="80" color="grey"></v-list-item-avatar>
+                    <v-text-field v-if="!is_textarea(current_question)" label="Regular"></v-text-field>
+                    <v-textarea v-if="is_textarea(current_question)" solo name="input-7-4" label="Solo textarea"></v-textarea>
+                </v-list-item-content>
             </v-list-item>
 
             <v-card-actions>
-                <v-btn text>Button</v-btn>
-                <v-btn text>Button</v-btn>
+                <v-btn v-disabled="!has_back()" depressed large color="primary" @click="back()" text>&larr;Vissza</v-btn>
+                <v-spacer></v-spacer>
+                <v-btn v-disabled="!has_next()" depressed large color="primary" @click="next()" text>Tovább&rarr;</v-btn>
             </v-card-actions>
         </v-card>
     </div>
@@ -29,17 +31,36 @@ export default {
     name: "HelloWorld",
     data: function() {
         return {
-            ß: ß
+            anima_questions: ß.ANIMA_QUESTIONS,
+            current_question: 0,
+            question_text: ""
         };
     },
     props: {
         msg: String
     },
-    components: {
+    methods: {
+        get_question(i) {
+            return this.anima_questions[i];
+        },
+        is_textarea(i) {
+            return this.anima_questions[i].type === "textarea";
+        },
+        next() {
+            if (this.current_question < ß.ANIMA_QUESTIONS.length) this.current_question++;
+        },
+        back() {
+            if (this.current_question > 0) this.current_question--;
+        },
+        has_next() {
+            return this.current_question < ß.ANIMA_QUESTIONS.length;
+        },
+        has_back() {
+            return this.current_question > 0;
+        }
     },
-    mounted() {
-
-    }
+    components: {},
+    mounted() {}
 };
 </script>
 

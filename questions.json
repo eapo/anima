@@ -1,12 +1,19 @@
 [
-  {"question": "Email cím"},
-  {"question": "Ki vagyok én?"},
-  {"question": "Mihez értek, miben vagyok jó?"},
-  {"question": "Mi motivál engem?"},
-  {"question": "Hogyan érint a karantén?"},
-  {"question": "Mit akarok tenni ez idő alatt?"},
-  {"question": "Milyen erőforrásokra* van szükségem?",
-   "description": "Erőforrás: Olyan szellemi, anyagi, gazdasági, társadalmi tényező, amely lehetőséget ad vagy alkalmas eszköz lehet adott cél megvalósításához, bizonyos dolog fejlesztéséhez."},
-  {"question": "Milyen megosztható erőforrások* állnak rendelkezésemre?"},
-  {"question": "Mit üzenek a világnak?"}
+    { "question": "Email cím" },
+    { "question": "Ki vagyok én?" },
+    { "question": "Mihez értek, miben vagyok jó?" },
+    { "question": "Mi motivál engem?" },
+    { "question": "Hogyan érint a karantén?" },
+    { "question": "Mit akarok tenni ez idő alatt?" },
+    {
+        "question": "Milyen erőforrásokra van szükségem?",
+        "type": "textarea",
+        "description": "Erőforrás: Olyan szellemi, anyagi, gazdasági, társadalmi tényező, amely lehetőséget ad vagy alkalmas eszköz lehet adott cél megvalósításához, bizonyos dolog fejlesztéséhez."
+    },
+    {
+        "question": "Milyen megosztható erőforrások állnak rendelkezésemre?",
+        "type": "textarea",
+        "description": "Erőforrás: Olyan szellemi, anyagi, gazdasági, társadalmi tényező, amely lehetőséget ad vagy alkalmas eszköz lehet adott cél megvalósításához, bizonyos dolog fejlesztéséhez."
+    },
+    { "question": "Mit üzenek a világnak?" }
 ]
