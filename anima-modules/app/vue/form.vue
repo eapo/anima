@@ -1,7 +1,8 @@
 <template>
     <div class="hello">
         <h1>Karantén! Megoldás?</h1>
-        <v-card class="mx-auto" max-width="800" outlined>
+      <br>
+        <v-card v-if="!last" class="mx-auto" max-width="800" outlined>
             <v-list-item three-line>
                 <v-list-item-content>
                     <div class="overline mb-4"></div>
@@ -17,7 +18,11 @@
                 <v-btn :disabled="!has_back()" depressed large color="primary" @click="back()" text>&larr;Vissza</v-btn>
                 <v-spacer></v-spacer>
                 <v-btn :disabled="!has_next()" depressed large color="primary" @click="next()" text>Tovább&rarr;</v-btn>
-            </v-card-actions>
+            </v-card-actions> </v-card
+        ><v-card v-if="last" class="mx-auto" max-width="800" outlined>
+            <v-alert type="success">
+                Köszönjük hogy kitöltötte kérdéseinket.
+            </v-alert>
         </v-card>
     </div>
 </template>
@@ -34,7 +39,8 @@ export default {
             anima_questions: ß.ANIMA_QUESTIONS,
             current_question: 0,
             question_text: "",
-            answer: ""
+            answer: "",
+            last: false
         };
     },
     props: {
@@ -52,18 +58,17 @@ export default {
             return this.anima_questions[i].type === "textarea";
         },
         next() {
-            var answers = this.$store.state.server.session.data || [];
-            var i = this.current_question;
-            // if (i==0) { this.validateEmail(this.answer) }
-
-            answers[i] = { question: this.anima_questions[i].question, answer: this.answer };
-
-            this.$store.dispatch("server/save_session_data", answers);
+            this.save();
             this.answer = "";
+            if (this.current_question == ß.ANIMA_QUESTIONS.length - 1) return (this.last = true);
 
-            if (this.current_question < ß.ANIMA_QUESTIONS.length) this.current_question++;
+            this.current_question++;
+
+            // ha az utolsó kérdésen vagyunk. ...
         },
         back() {
+            this.save();
+
             this.answer = "";
 
             if (this.current_question > 0) this.current_question--;
@@ -73,6 +78,16 @@ export default {
         },
         has_back() {
             return this.current_question > 0;
+        },
+        save() {
+            // ez mentse
+            var answers = this.$store.state.server.session.data || [];
+            var i = this.current_question;
+            // if (i==0) { this.validateEmail(this.answer) }
+
+            answers[i] = { question: this.anima_questions[i].question, answer: this.answer };
+
+            this.$store.dispatch("server/save_session_data", answers);
         }
     },
     components: {},

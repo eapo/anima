@@ -3,7 +3,6 @@
         <v-toolbar-items>
             <v-btn text to="/about">Home</v-btn>
             <v-btn text to="/form">Form</v-btn>
-            <v-btn @click="clear_session()">clear</v-btn>
 
             <language_selector></language_selector>
             <v-btn v-if="$store.state.server.session.is_admin" text @click="open_admin()">Admin</v-btn>
@@ -47,6 +46,7 @@ export default {
         open_admin: function() {
             window.open("https://" + ß.HOSTNAME + "/admin", "_blank");
         },
+        // <v-btn @click="clear_session()">clear</v-btn>
         clear_session() {
             this.$store.dispatch("server/save_session_data", []);
         }
