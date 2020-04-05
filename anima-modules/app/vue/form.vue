@@ -8,8 +8,8 @@
                     <v-list-item-title class="headline mb-1">{{ get_question(current_question).question }}</v-list-item-title>
                     <v-list-item-subtitle>{{ get_question(current_question).description }}</v-list-item-subtitle>
 
-                    <v-text-field v-if="!is_textarea(current_question)" label="Regular"></v-text-field>
-                    <v-textarea v-if="is_textarea(current_question)" solo name="input-7-4" label="Solo textarea"></v-textarea>
+                    <v-text-field v-if="!is_textarea(current_question)" v-model="answer" label="Regular"></v-text-field>
+                    <v-textarea v-if="is_textarea(current_question)" v-model="answer" solo name="input-7-4" label="Solo textarea"></v-textarea>
                 </v-list-item-content>
             </v-list-item>
 
@@ -19,6 +19,7 @@
                 <v-btn v-disabled="!has_next()" depressed large color="primary" @click="next()" text>Tovább&rarr;</v-btn>
             </v-card-actions>
         </v-card>
+      is {{$store.state.server.session.data}}
     </div>
 </template>
 
@@ -33,7 +34,8 @@ export default {
         return {
             anima_questions: ß.ANIMA_QUESTIONS,
             current_question: 0,
-            question_text: ""
+            question_text: "",
+            answer: ""
         };
     },
     props: {
@@ -47,7 +49,16 @@ export default {
             return this.anima_questions[i].type === "textarea";
         },
         next() {
+          	
+          	var answers = ł(this.$store.state, "server.session.data") || [];
+          	answers.push({question: this.anima_questions[i], answer: this.answer});
+          	
             if (this.current_question < ß.ANIMA_QUESTIONS.length) this.current_question++;
+          
+            
+          
+          	this.$store.dispatch("server/save_session_data", {  });
+            this.answer = "";
         },
         back() {
             if (this.current_question > 0) this.current_question--;
